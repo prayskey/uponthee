@@ -13,11 +13,7 @@ const PORT = process.env.PORT;
 const saltRounds = 10;
 
 const db = new pg.Pool({
-    user: process.env.DB_USER,
-    host: process.env.DB_HOST,
-    database: process.env.DB_NAME,
-    password: process.env.DB_PASSWORD,
-    port: process.env.DB_PORT,
+    connectionString: process.env.DATABASE_URL,
 });
 const pgSession = connectPg(session);
 
@@ -96,7 +92,6 @@ app.post('/sign-up', async (req, res) => {
 
 app.post('/sign-in', (req, res, next) => {
     passport.authenticate('local', (err, user) => {
-        console.log("This point was hit");
         if (err) {
             console.error("Error during authentication:", err);
             return res.status(500).render('error-page.ejs', { error: "An error occurred during authentication. Please try again later." });
