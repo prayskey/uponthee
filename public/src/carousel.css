@@ -1,0 +1,47 @@
+/* arrow color */
+:root {
+  --swiper-navigation-color: #your-color;
+}
+
+/* button container */
+.swiper-button-next,
+.swiper-button-prev {
+  background-color: rgb(231, 230, 230);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  padding: 24px;
+  transition: background-color 0.3s ease;
+}
+
+/* hover state */
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background-color: rgb(255, 255, 255);
+}
+
+/* arrow icon size */
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* dot color */
+:root {
+  --swiper-pagination-color: rgb(255, 255, 255)
+  --swiper-pagination-bullet-inactive-color: rgb(231, 230, 230);
+  --swiper-pagination-bullet-inactive-opacity: 0.5;
+}
+
+/* dot size */
+.swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+}
+
+/* active dot */
+.swiper-pagination-bullet-active {
+  width: 24px;
+  border-radius: 4px;
+}

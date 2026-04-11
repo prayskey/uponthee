@@ -4,6 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/src/output.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <link rel="stylesheet" href="/src/carousel.css">
     <title>Accomod</title>
   </head>
   <body class="px-8 pt-20">
@@ -12,9 +17,7 @@
 
     <main>
       <!-- Trending Lodges carousel -->
-      <section>
-        
-      </section>
+      <%- include('partials/carousel.ejs') %>
 
       <!-- FUTO Communities -->
       <section>
@@ -46,5 +49,7 @@
 
     <!-- Footer -->
     <%- include('partials/footer.ejs')%>
+    <script src="/js/carousel.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   </body>
 </html>
