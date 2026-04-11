@@ -140,6 +140,7 @@ passport.deserializeUser(async (user, done) => {
         done(err);
     }
 });
-app.listen(PORT, () => {
-    console.log(`Server is running at PORT: ${PORT}`);
-});
+// app.listen(PORT, () => {
+//     console.log(`Server is running at PORT: ${PORT}`);
+// });
+export default app;
