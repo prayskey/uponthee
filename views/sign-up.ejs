@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/src/output.css" />
+    <title>Accomod</title>
+  </head>
+  <body class="flex min-h-dvh items-center justify-center bg-gray-100">
+    <main
+      class="my-auto w-full max-w-sm rounded-lg bg-white px-6 py-10 shadow-md"
+    >
+      <div class="mb-4 space-y-4">
+        <h1 class="text-center text-3xl font-bold">Sign up</h1>
+        <p>
+          Do you have an account?
+          <a href="/sign-in" class="text-blue-500 hover:underline">Sign in</a>
+        </p>
+      </div>
+
+      <form action="/sign-up" method="post">
+        <fieldset class="flex flex-col space-y-4">
+          <input
+            type="text"
+            class="rounded-sm border border-gray-500 px-2.5 py-2"
+            placeholder="First name"
+            name="firstName"
+          />
+          <input
+            type="text"
+            class="rounded-sm border border-gray-500 px-2.5 py-2"
+            placeholder="Last name"
+            name="lastName"
+          />
+          <input
+            type="text"
+            class="rounded-sm border border-gray-500 px-2.5 py-2"
+            placeholder="Username"
+            name="userName"
+          />
+          <input
+            type="email"
+            class="rounded-sm border border-gray-500 px-2.5 py-2"
+            placeholder="Email"
+            name="email"
+          />
+          <input
+            type="tel"
+            class="rounded-sm border border-gray-500 px-2.5 py-2"
+            placeholder="Phone number"
+            name="phoneNumber"
+          />
+          <input
+            type="password"
+            class="rounded-sm border border-gray-500 px-2.5 py-2"
+            placeholder="Password"
+            name="password"
+          />
+
+          <button
+            type="submit"
+            class="transition-duration-300 cursor-pointer rounded bg-[#3D1722] px-4 py-2 font-medium text-white transition hover:bg-[#502632]"
+          >
+            Sign Up
+          </button>
+        </fieldset>
+      </form>
+    </main>
+  </body>
+</html>
