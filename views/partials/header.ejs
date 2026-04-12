@@ -1,7 +1,8 @@
-<header class="h-16 w-full bg-[#55142A] fixed top-0 left-0 flex items-center justify-between px-4 z-50">
-
+<header
+  class="fixed top-0 left-0 z-50 flex h-16 w-full items-center justify-between bg-[#55142A] px-4"
+>
   <!-- Logo -->
-  <div class="text-white text-lg font-bold">Accomod</div>
+  <div class="text-lg font-bold text-white">Uponthee</div>
 
   <!-- Desktop Search -->
   <div class="hidden md:flex">
@@ -10,10 +11,11 @@
         type="search"
         name="query"
         placeholder="Search..."
-        class="px-2.5 py-2 border text-white border-gray-300 rounded-md focus:outline-none text-sm"
-      >
+        class="rounded-md border border-gray-300 px-2.5 py-2 text-sm text-white focus:outline-none"
+      />
     </form>
   </div>
 
   <!-- Nav -->
-<%- include('navbar.ejs') %>
+  <%- include('navbar.ejs') %>
+</header>

@@ -89,7 +89,6 @@ app.post('/sign-up', async (req, res) => {
         return res.status(500).send("An error occurred during sign-up. Please try again later.");
     }
 });
-
 app.post('/sign-in', (req, res, next) => {
     passport.authenticate('local', (err, user) => {
         if (err) {
@@ -140,7 +139,7 @@ passport.deserializeUser(async (user, done) => {
         done(err);
     }
 });
-// app.listen(PORT, () => {
-//     console.log(`Server is running at PORT: ${PORT}`);
-// });
-export default app;
+app.listen(PORT, () => {
+    console.log(`Server is running at PORT: ${PORT}`);
+});
+// export default app;

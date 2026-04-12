@@ -1,26 +1,51 @@
+<!-- Desktop Nav -->
+<nav class="hidden md:flex items-center space-x-6">
+  <ul class="flex space-x-6">
+    <li><a href="#" class="text-white hover:text-gray-300 text-sm">Home</a></li>
+    <li><a href="#" class="text-white hover:text-gray-300 text-sm">Lodges</a></li>
+    <li><a href="#" class="text-white hover:text-gray-300 text-sm">Contact</a></li>
+  </ul>
 
-  <!-- Desktop Nav -->
-  <nav class="hidden md:block">
-    <ul class="flex space-x-6">
-      <li><a href="#" class="text-white hover:text-gray-300 text-sm">Home</a></li>
-      <li><a href="#" class="text-white hover:text-gray-300 text-sm">Lodges</a></li>
-      <li><a href="#" class="text-white hover:text-gray-300 text-sm">Contact</a></li>
-    </ul>
-  </nav>
-
-  <!-- Mobile Hamburger only -->
-  <div class="flex items-center md:hidden">
-    <button id="menu-toggle" class="text-white focus:outline-none" aria-label="Open menu">
-      <svg id="icon-open" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
-      </svg>
-      <svg id="icon-close" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-      </svg>
+  <!-- Profile Dropdown -->
+  <div class="relative">
+    <button id="profile-toggle" class="flex items-center gap-2 text-white focus:outline-none">
+      <!-- Avatar icon -->
+      <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center hover:bg-white/30 transition">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0zM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+        </svg>
+      </div>
     </button>
-  </div>
 
-</header>
+    <!-- Dropdown Menu -->
+    <div id="profile-dropdown"
+      class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg overflow-hidden z-50">
+      <a href="/profile" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100">My Profile</a>
+      <a href="/bookings" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100">My Bookings</a>
+      <a href="/saved" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100">Saved</a>
+      <a href="/history" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">History</a>
+      <a href="/settings" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
+      <div class="border-t border-gray-100"></div>
+      <form action="/logout" method="post">
+        <button type="submit" class="w-full text-left px-4 py-2.5 text-sm text-red-600 hover:bg-gray-100">
+          Logout
+        </button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Hamburger only -->
+<div class="flex items-center md:hidden">
+  <button id="menu-toggle" class="text-white focus:outline-none" aria-label="Open menu">
+    <svg id="icon-open" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+    </svg>
+    <svg id="icon-close" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+    </svg>
+  </button>
+</div>
 
 <!-- Overlay -->
 <div id="menu-overlay" class="fixed inset-0 bg-black/50 z-40"></div>
@@ -35,7 +60,7 @@
         type="search"
         name="query"
         placeholder="Search..."
-        class="w-full px-3 py-2 rounded-md border text-white border-gray-300 focus:outline-none text-sm"
+        class="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none text-sm"
       >
     </form>
   </div>
@@ -49,12 +74,23 @@
     </ul>
   </nav>
 
-  <!-- Close button at bottom -->
-  <button id="menu-close-btn" class="mt-auto mb-8 text-white/60 hover:text-white text-sm focus:outline-none text-left">
+  <!-- Profile Section at bottom -->
+  <div class="mt-auto mb-8 border-t border-white/20 pt-6 flex flex-col space-y-4">
+    <a href="/profile" class="text-white text-sm hover:text-gray-300">My Profile</a>
+    <a href="/bookings" class="text-white text-sm hover:text-gray-300">My Bookings</a>
+    <a href="/saved" class="text-white text-sm hover:text-gray-300">Saved</a>
+    <a href="/history" class="text-white text-sm hover:text-gray-300">History</a>
+    <a href="/settings" class="text-white text-sm hover:text-gray-300">Settings</a>
+    <form action="/logout" method="post">
+      <button type="submit" class="text-red-400 hover:text-red-300 text-sm focus:outline-none">
+        Logout
+      </button>
+    </form>
+  </div>
+
+  <!-- Close button -->
+  <button id="menu-close-btn" class="mb-4 text-white/60 hover:text-white text-sm focus:outline-none text-left">
     ✕ Close menu
   </button>
-  <form action="/logout" method="post">
-    <button type="submit">Logout</button>
-  </form>
 
 </div>

@@ -10,42 +10,18 @@
     />
     <link rel="stylesheet" href="/src/navbar.css" />
     <link rel="stylesheet" href="/src/carousel.css" />
-    <title>Accomod</title>
+    <title>Uponthee</title>
   </head>
-  <body class="px-8 pt-20">
+  <body class="pt-20">
     <!-- Header  -->
     <%- include('partials/header.ejs')%>
 
-    <main>
+    <main class="space-y-10 px-8">
       <!-- Trending Lodges carousel -->
       <%- include('partials/carousel.ejs') %>
 
       <!-- FUTO Communities -->
-      <section>
-        <!-- Umuchima Lodges -->
-        <div>
-          <h2 class="mb-4 text-2xl font-bold">Umuchima Lodges</h2>
-          <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
-            <!-- Lodge Card -->
-            <div class="overflow-hidden rounded-lg bg-white shadow-md">
-              <img
-                src="/images/lodge1.jpg"
-                alt="Lodge 1"
-                class="h-48 w-full object-cover"
-              />
-              <div class="p-4">
-                <h3 class="text-lg font-semibold">Lodge Name</h3>
-                <p class="text-gray-600">Location: Umuchima</p>
-                <p class="text-gray-600">Price: $100/night</p>
-              </div>
-            </div>
-            <!-- More lodge cards can be added here -->
-          </div>
-        </div>
-
-        <!-- Eziobodo Lodges -->
-        <div></div>
-      </section>
+      <%- include('partials/futo-communities.ejs') %>
     </main>
 
     <!-- Footer -->

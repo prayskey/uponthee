@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
-  const menuToggle   = document.getElementById('menu-toggle');
+  const menuToggle = document.getElementById('menu-toggle');
   const menuCloseBtn = document.getElementById('menu-close-btn');
-  const mobileMenu   = document.getElementById('mobile-menu');
-  const menuOverlay  = document.getElementById('menu-overlay');
-  const iconOpen     = document.getElementById('icon-open');
-  const iconClose    = document.getElementById('icon-close');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuOverlay = document.getElementById('menu-overlay');
+  const iconOpen = document.getElementById('icon-open');
+  const iconClose = document.getElementById('icon-close');
 
   let menuOpen = false;
 
@@ -30,4 +30,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
   menuCloseBtn.addEventListener('click', closeMenu);
   menuOverlay.addEventListener('click', closeMenu);
+});
+
+// Profile dropdown
+const profileToggle = document.getElementById('profile-toggle');
+const profileDropdown = document.getElementById('profile-dropdown');
+
+profileToggle.addEventListener('click', (e) => {
+  e.stopPropagation();
+  profileDropdown.classList.toggle('hidden');
+});
+
+// Close dropdown when clicking outside
+document.addEventListener('click', () => {
+  profileDropdown.classList.add('hidden');
 });
