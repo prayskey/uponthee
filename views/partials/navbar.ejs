@@ -1,12 +1,18 @@
 <!-- Desktop Nav -->
-<nav class="hidden items-center space-x-6 md:flex font-medium">
+<nav class="hidden items-center space-x-6 font-medium md:flex">
   <ul class="flex space-x-6">
-    <li><a href="/home" class="text-sm text-white hover:text-gray-300">Home</a></li>
     <li>
-      <a href="/lodges" class="text-sm text-white hover:text-gray-300">Lodges</a>
+      <a href="/home" class="text-sm text-white hover:text-gray-300">Home</a>
     </li>
     <li>
-      <a href="/about-us" class="text-sm text-white hover:text-gray-300">About Us</a>
+      <a href="/lodges" class="text-sm text-white hover:text-gray-300"
+        >Lodges</a
+      >
+    </li>
+    <li>
+      <a href="/about-us" class="text-sm text-white hover:text-gray-300"
+        >About Us</a
+      >
     </li>
   </ul>
 
@@ -14,7 +20,7 @@
   <div class="relative">
     <button
       id="profile-toggle"
-      class="flex items-center gap-2 cursor-pointer text-white focus:outline-none"
+      class="flex cursor-pointer items-center gap-2 text-white focus:outline-none"
     >
       <!-- Avatar icon -->
       <div
@@ -126,7 +132,8 @@
 <!-- Slide-out Menu -->
 <div
   id="mobile-menu"
-  class="fixed top-0 left-0 bottom-0 z-50 flex h-full w-64 flex-col bg-[#55142A] px-6 pt-6"
+  class="100dvh fixed top-0 left-0 z-50 flex w-64 flex-col bg-[#55142A] px-6 pt-6"
+  style="height: 100dvh"
 >
   <!-- Search inside mobile slide menu -->
   <div class="mb-8">
@@ -135,7 +142,7 @@
         type="search"
         name="query"
         placeholder="Search for lodge"
-        class="w-full border border-gray-300 rounded-md  px-3 py-2 text-white focus:outline-none focus:border-[#A79A79]"
+        class="w-full rounded-md border border-gray-300 px-3 py-2 text-white focus:border-[#A79A79] focus:outline-none"
       />
     </form>
   </div>
