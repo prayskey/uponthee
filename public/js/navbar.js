@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     menuOverlay.classList.add('open');
     iconOpen.classList.add('hidden');
     iconClose.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
     menuOpen = true;
   }
 
@@ -21,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
     menuOverlay.classList.remove('open');
     iconOpen.classList.remove('hidden');
     iconClose.classList.add('hidden');
+    document.body.style.overflow = '';
     menuOpen = false;
   }
 
