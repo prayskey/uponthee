@@ -4,13 +4,308 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/src/output.css" />
-    <title>Document</title>
+    <title>Profile</title>
   </head>
-  <body class="min-h-dvh">
-    <h1>Welcome <%= user.first_name %></h1>
+
+  <body
+    class="min-h-dvh bg-gradient-to-br from-gray-50 via-white to-gray-100 text-gray-800"
+  >
+    <main class="mx-auto max-w-7xl px-4 py-6 lg:py-10">
+      <!-- TOP BAR (Back button) -->
+      <div class="mb-6 flex items-center">
+        <a
+          href="/"
+          class="group inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white/70 px-4 py-2 shadow-sm backdrop-blur transition-all duration-200 hover:shadow-md"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4 text-gray-600 transition-transform duration-200 group-hover:-translate-x-1"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
+
+          <span
+            class="text-sm font-medium text-gray-700 transition group-hover:text-gray-900"
+          >
+            Back
+          </span>
+        </a>
+      </div>
+
+      <!-- GRID LAYOUT -->
+      <div class="grid grid-cols-1 gap-6 lg:grid-cols-[300px_1fr] lg:gap-8">
+        <!-- LEFT: PROFILE -->
+        <aside
+          class="flex flex-col items-center rounded-3xl border border-gray-100 bg-white/80 p-5 shadow-md backdrop-blur sm:p-6"
+        >
+          <div class="group relative">
+            <div
+              class="h-28 w-28 overflow-hidden rounded-full border-4 border-white shadow-lg sm:h-32 sm:w-32 lg:h-36 lg:w-36"
+            >
+              <img
+                src="/images/user-avatar-profile-person-people-svgrepo-com.svg"
+                class="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+                alt=""
+              />
+            </div>
+
+            <div
+              class="absolute inset-0 flex items-center justify-center rounded-full bg-black/30 opacity-0 transition group-hover:opacity-100"
+            >
+              <span class="text-xs font-medium text-white sm:text-sm"
+                >Change</span
+              >
+            </div>
+          </div>
+
+          <h2
+            class="mt-4 text-center text-lg font-semibold tracking-tight sm:text-xl"
+          >
+            <%= user.first_name %> <%= user.last_name %>
+          </h2>
+
+          <p class="mt-1 text-center text-sm text-gray-500">
+            <%= user.email %>
+          </p>
+
+          <button
+            class="mt-4 rounded-full bg-green-600 px-5 py-2 text-sm font-medium text-white shadow transition-all duration-200 hover:bg-green-700 hover:shadow-md"
+          >
+            Upload Photo
+          </button>
+
+          <div class="my-5 h-px w-full bg-gray-200"></div>
+
+          <div class="w-full space-y-2 text-sm text-gray-600">
+            <div class="flex justify-between">
+              <span>Account</span>
+              <span class="font-medium text-gray-800">Active</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Joined</span>
+              <span class="font-medium text-gray-800">Jan 2026</span>
+            </div>
+          </div>
+        </aside>
+
+        <!-- RIGHT SIDE -->
+        <section class="flex flex-col gap-6 lg:gap-8">
+          <!-- PERSONAL INFO -->
+          <div
+            class="rounded-3xl border border-gray-100 bg-white/80 p-5 shadow-md backdrop-blur sm:p-6 lg:p-8"
+          >
+            <!-- HEADER -->
+            <div class="mb-5 flex items-center justify-between">
+              <h3 class="text-lg font-semibold tracking-tight sm:text-xl">
+                Personal Information
+              </h3>
+
+              <button
+                id="editBtn"
+                class="rounded-lg border border-gray-200 px-4 py-1.5 text-sm font-medium transition hover:bg-gray-100"
+              >
+                Edit Profile
+              </button>
+            </div>
+
+            <form
+              id="profileForm"
+              class="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2"
+            >
+              <div>
+                <label class="text-xs tracking-wide text-gray-400 uppercase"
+                  >First Name</label
+                >
+                <input
+                  type="text"
+                  value="<%= user.first_name %>"
+                  readonly
+                  class="input mt-2 w-full rounded-xl border border-gray-200 bg-transparent px-4 py-2.5"
+                />
+              </div>
+
+              <div>
+                <label class="text-xs tracking-wide text-gray-400 uppercase"
+                  >Last Name</label
+                >
+                <input
+                  type="text"
+                  value="<%= user.last_name %>"
+                  readonly
+                  class="input mt-2 w-full rounded-xl border border-gray-200 bg-transparent px-4 py-2.5"
+                />
+              </div>
+
+              <div class="md:col-span-2">
+                <label class="text-xs tracking-wide text-gray-400 uppercase"
+                  >Email</label
+                >
+                <input
+                  type="email"
+                  value="<%= user.email %>"
+                  readonly
+                  class="input mt-2 w-full rounded-xl border border-gray-200 bg-transparent px-4 py-2.5"
+                />
+              </div>
+
+              <div>
+                <label class="text-xs tracking-wide text-gray-400 uppercase"
+                  >Phone</label
+                >
+                <input
+                  type="text"
+                  readonly
+                  class="input mt-2 w-full rounded-xl border border-gray-200 bg-transparent px-4 py-2.5"
+                />
+              </div>
+
+              <div>
+                <label class="text-xs tracking-wide text-gray-400 uppercase"
+                  >Date of Birth</label
+                >
+                <input
+                  type="date"
+                  readonly
+                  class="input mt-2 w-full rounded-xl border border-gray-200 bg-transparent px-4 py-2.5"
+                />
+              </div>
+
+              <div>
+                <label class="text-xs tracking-wide text-gray-400 uppercase"
+                  >Gender</label
+                >
+                <select
+                  disabled
+                  class="input mt-2 w-full rounded-xl border border-gray-200 bg-transparent px-4 py-2.5"
+                >
+                  <option>Male</option>
+                  <option>Female</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="text-xs tracking-wide text-gray-400 uppercase"
+                  >Location</label
+                >
+                <input
+                  type="text"
+                  readonly
+                  class="input mt-2 w-full rounded-xl border border-gray-200 bg-transparent px-4 py-2.5"
+                />
+              </div>
+
+              <div class="md:col-span-2">
+                <label class="text-xs tracking-wide text-gray-400 uppercase"
+                  >Bio</label
+                >
+                <textarea
+                  rows="3"
+                  disabled
+                  class="input mt-2 w-full rounded-xl border border-gray-200 bg-transparent px-4 py-2.5"
+                ></textarea>
+              </div>
+
+              <div
+                id="saveContainer"
+                class="flex hidden justify-end md:col-span-2"
+              >
+                <button
+                  type="button"
+                  class="rounded-xl bg-green-600 px-6 py-2.5 text-sm font-medium text-white shadow hover:bg-green-700"
+                >
+                  Save Changes
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- SECURITY (HIDDEN INITIALLY) -->
+          <div
+            id="securitySection"
+            class="hidden rounded-3xl border border-gray-100 bg-white/80 p-5 shadow-md backdrop-blur sm:p-6 lg:p-8"
+          >
+            <h3 class="mb-5 text-lg font-semibold tracking-tight sm:text-xl">
+              Security
+            </h3>
+
+            <form class="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2">
+              <div class="md:col-span-2">
+                <label class="text-xs tracking-wide text-gray-400 uppercase"
+                  >Current Password</label
+                >
+                <input
+                  type="password"
+                  class="mt-2 w-full rounded-xl border border-gray-200 px-4 py-2.5 focus:ring-2 focus:ring-red-500"
+                />
+              </div>
+
+              <div>
+                <label class="text-xs tracking-wide text-gray-400 uppercase"
+                  >New Password</label
+                >
+                <input
+                  type="password"
+                  class="mt-2 w-full rounded-xl border border-gray-200 px-4 py-2.5 focus:ring-2 focus:ring-red-500"
+                />
+              </div>
+
+              <div>
+                <label class="text-xs tracking-wide text-gray-400 uppercase"
+                  >Confirm Password</label
+                >
+                <input
+                  type="password"
+                  class="mt-2 w-full rounded-xl border border-gray-200 px-4 py-2.5 focus:ring-2 focus:ring-red-500"
+                />
+              </div>
+            </form>
+          </div>
+        </section>
+      </div>
+    </main>
 
     <%- include('partials/footer.ejs') %>
+    <script>
+      const editBtn = document.getElementById("editBtn");
+      const inputs = document.querySelectorAll(".input");
+      const saveContainer = document.getElementById("saveContainer");
+      const securitySection = document.getElementById("securitySection");
 
-    <script src="/js/profile.js"></script>
+      let isEditing = false;
+
+      editBtn.addEventListener("click", () => {
+        isEditing = !isEditing;
+
+        inputs.forEach((el) => {
+          if (el.tagName === "INPUT") {
+            el.toggleAttribute("readonly");
+          } else {
+            el.toggleAttribute("disabled");
+          }
+
+          // visual feedback
+          el.classList.toggle("bg-white");
+          el.classList.toggle("focus:ring-2");
+          el.classList.toggle("focus:ring-green-500");
+        });
+
+        // toggle save button
+        saveContainer.classList.toggle("hidden");
+
+        // toggle password section
+        securitySection.classList.toggle("hidden");
+
+        // toggle button text
+        editBtn.textContent = isEditing ? "Cancel" : "Edit Profile";
+      });
+    </script>
   </body>
 </html>
