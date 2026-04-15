@@ -1,48 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/src/output.css" />
-    <title>Uponthee</title>
-  </head>
-  <body class="flex min-h-dvh items-center justify-center bg-gray-100">
-    <main class="my-auto bg-white px-6 py-10 rounded-lg shadow-md w-full max-w-sm ">
-      <div class="space-y-4 mb-4">
-        <h1 class="text-3xl font-bold text-center">Sign in</h1>
-        <p>
-          Don't have an account?
-          <a href="/sign-up" class="text-blue-500 hover:underline"
-            >Create your account</a
-          >
-        </p>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign in - Uponthee</title>
+  <link rel="stylesheet" href="/src/output.css" />
+</head>
+
+<body class="min-h-dvh flex items-center justify-center bg-gradient-to-b from-[#f6f7fb] to-white px-4 relative overflow-hidden">
+
+  <!-- ================= BACKGROUND BLUR BLOBS ================= -->
+  <div class="absolute inset-0 -z-10">
+    <div class="absolute w-[500px] h-[500px] bg-[#55142A]/10 blur-3xl rounded-full top-[-180px] left-[-180px]"></div>
+    <div class="absolute w-[500px] h-[500px] bg-[#55142A]/10 blur-3xl rounded-full bottom-[-200px] right-[-180px]"></div>
+  </div>
+
+  <!-- ================= LOGIN CARD ================= -->
+  <main class="w-full max-w-md bg-white border border-gray-100 shadow-xl rounded-2xl p-8 sm:p-10">
+
+    <!-- HEADER -->
+    <div class="text-center">
+      <h1 class="text-3xl font-semibold tracking-tight text-gray-900">
+        Welcome back
+      </h1>
+
+      <p class="mt-2 text-sm text-gray-500 leading-relaxed">
+        Sign in to continue exploring verified lodges around FUTO.
+      </p>
+    </div>
+
+    <!-- FORM -->
+    <form action="/sign-in" method="post" class="mt-8 space-y-5">
+
+      <!-- EMAIL -->
+      <div>
+        <label class="text-xs font-medium text-gray-500">Email</label>
+        <input
+          type="email"
+          name="email"
+          placeholder="you@example.com"
+          required
+          class="mt-1 w-full rounded-xl border border-gray-200 px-4 py-3 text-sm
+                 focus:outline-none focus:ring-2 focus:ring-[#55142A]/20 focus:border-[#55142A]
+                 transition"
+        />
       </div>
 
-      <form action="/sign-in" method="post">
-        <fieldset class="flex flex-col space-y-4">
-          <input
-            type="text"
-            class="rounded-sm border border-gray-500 px-2.5 py-2"
-            placeholder="Email"
-            name="email"
-          />
-          <input
-            type="password"
-            class="rounded-sm border border-gray-500 px-2.5 py-2"
-            placeholder="Password"
-            name="password"
-          />
-          <a href="/forgotten-password" class="text-right text-sm font-medium text-blue-500 hover:underline"
-            >Forgotten password?</a
-          >
-          <button
-            type="submit"
-            class="transition-duration-300 cursor-pointer rounded bg-[#55142A] px-4 py-2 font-medium text-white transition hover:bg-[#55142A]/90"
-          >
-            Sign in
-          </button>
-        </fieldset>
-      </form>
-    </main>
-  </body>
+      <!-- PASSWORD -->
+      <div>
+        <label class="text-xs font-medium text-gray-500">Password</label>
+        <input
+          type="password"
+          name="password"
+          placeholder="••••••••"
+          required
+          class="mt-1 w-full rounded-xl border border-gray-200 px-4 py-3 text-sm
+                 focus:outline-none focus:ring-2 focus:ring-[#55142A]/20 focus:border-[#55142A]
+                 transition"
+        />
+      </div>
+
+      <!-- FORGOT PASSWORD -->
+      <div class="flex justify-end">
+        <a href="/forgotten-password"
+           class="text-xs text-[#55142A] hover:underline transition">
+          Forgot password?
+        </a>
+      </div>
+
+      <!-- SUBMIT BUTTON -->
+      <button
+        type="submit"
+        class="w-full bg-[#55142A] text-white py-3 rounded-xl font-medium
+               hover:scale-[1.01] active:scale-[0.99]
+               transition duration-200"
+      >
+        Sign in
+      </button>
+
+    </form>
+
+    <!-- FOOTER LINKS -->
+    <div class="mt-6 text-center text-sm text-gray-500">
+      Don’t have an account?
+      <a href="/sign-up" class="text-[#55142A] font-medium hover:underline">
+        Create account
+      </a>
+    </div>
+
+  </main>
+
+</body>
 </html>
