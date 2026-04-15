@@ -8,7 +8,45 @@
   </head>
 
   <body class="min-h-screen bg-[#f6f7fb] text-gray-900">
-    <main class="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-10">
+    <!-- HEADER -->
+    <header
+      class="fixed top-0 left-0 z-50 w-full border-b border-white/10 bg-[#55142A] backdrop-blur-md"
+    >
+      <div
+        class="mx-auto flex max-w-7xl items-center justify-between px-6 py-3"
+      >
+        <!-- Logo -->
+        <div
+          class="cursor-pointer text-2xl font-bold tracking-wide text-white transition hover:opacity-80"
+        >
+          Uponthee
+        </div>
+
+        <!-- Auth Buttons -->
+        <div class="flex items-center gap-3">
+          <!-- Login -->
+          <a href="/sign-in">
+            <button
+              class="rounded-full px-5 py-1.5 cursor-pointer border-2 text-white/90 transition hover:bg-white hover:text-[#55142A] duration-300 hover:font-medium"
+            >
+              Login
+            </button>
+          </a>
+
+          <!-- Sign Up (Primary CTA) -->
+          <a href="/sign-up">
+            <button
+              class="rounded-full bg-white px-4 py-1.5 font-semibold cursor-pointer text-[#55142A] shadow-md transition duration-300 hover:scale-[1.03] hover:shadow-lg"
+            >
+              Get Started
+            </button>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT SECTION -->
+    <main class="mx-auto max-w-6xl px-4 pt-24 pb-12 sm:px-6 lg:px-10">
       <!-- HERO -->
       <section class="mx-auto max-w-3xl text-center">
         <p class="text-xs tracking-widest text-gray-400 uppercase">About Us</p>
@@ -155,5 +193,6 @@
         </a>
       </section>
     </main>
+    <%- include('partials/footer.ejs') %>
   </body>
 </html>

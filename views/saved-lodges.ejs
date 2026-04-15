@@ -5,10 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Saved Lodges</title>
     <link href="/src/output.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/navbar.css" />
   </head>
 
-  <body class="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-    <main class="mx-auto max-w-7xl px-4 pt-14 sm:px-6 lg:px-12">
+  <body
+    class="flex min-h-screen flex-col bg-gradient-to-b from-gray-50 to-white"
+  >
+    <%- include('partials/header.ejs') %>
+
+    <main class="mx-auto w-full max-w-7xl flex-1 px-4 pt-20 sm:px-6 lg:px-12">
       <!-- HEADER -->
       <div
         class="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
@@ -24,17 +29,17 @@
 
         <!-- LIVE STATS -->
         <div class="flex gap-3 text-xs sm:text-sm">
-          <div class="rounded-xl border bg-white px-3 py-2">
+          <div class="rounded-xl border bg-white px-3 py-2 shadow-sm">
             <p class="text-gray-400">Total</p>
             <p class="font-semibold text-gray-900" id="count">0</p>
           </div>
 
-          <div class="rounded-xl border bg-white px-3 py-2">
+          <div class="rounded-xl border bg-white px-3 py-2 shadow-sm">
             <p class="text-gray-400">Affordable</p>
             <p class="font-semibold text-green-600" id="cheap">0</p>
           </div>
 
-          <div class="rounded-xl border bg-white px-3 py-2">
+          <div class="rounded-xl border bg-white px-3 py-2 shadow-sm">
             <p class="text-gray-400">Premium</p>
             <p class="font-semibold text-gray-900" id="premium">0</p>
           </div>
@@ -48,7 +53,10 @@
       ></div>
 
       <!-- EMPTY STATE -->
-      <div id="empty-state" class="hidden py-24 text-center">
+      <div
+        id="empty-state"
+        class="animate-fade-in flex hidden flex-col items-center justify-center py-24 text-center"
+      >
         <div class="mb-3 text-4xl">💭</div>
 
         <h3 class="text-lg font-semibold text-gray-800">
@@ -60,14 +68,16 @@
         </p>
 
         <button
-          class="mt-6 rounded-xl bg-gray-900 px-6 py-2.5 text-sm text-white transition hover:bg-gray-800"
+          class="mt-6 rounded-xl bg-gray-900 px-6 py-2.5 text-sm text-white transition duration-300 hover:scale-[1.03] hover:bg-gray-800"
         >
           Explore lodges
         </button>
       </div>
     </main>
 
+    <%- include('partials/footer.ejs') %>
+
     <script src="/js/saved-lodges.js"></script>
-    
+    <script src="/js/navbar.js"></script>
   </body>
 </html>

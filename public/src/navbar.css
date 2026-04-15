@@ -1,13 +1,109 @@
+
+  /* ── Mobile menu ── */
   #mobile-menu {
     transform: translateX(-100%);
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
   }
   #mobile-menu.open {
     transform: translateX(0);
   }
+
+  /* ── Overlay ── */
   #menu-overlay {
     display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
   }
   #menu-overlay.open {
     display: block;
+    opacity: 1;
   }
+
+  /* ── Profile dropdown ── */
+  #profile-dropdown {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.97);
+    transition: opacity 0.18s ease, transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
+  }
+  #profile-dropdown.open {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+
+  /* ── Nav link underline ── */
+  .nav-link {
+    position: relative;
+    padding-bottom: 2px;
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.6);
+    transition: width 0.25s ease;
+  }
+  .nav-link:hover::after {
+    width: 100%;
+  }
+
+  /* ── Mobile nav links ── */
+  .mobile-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    transition: color 0.2s, padding-left 0.2s;
+    color: rgba(255,255,255,0.85);
+    font-size: 15px;
+    text-decoration: none;
+  }
+  .mobile-nav-link:hover {
+    color: #fff;
+    padding-left: 6px;
+  }
+
+  /* ── Avatar ring pulse on hover ── */
+  #profile-toggle .avatar-ring {
+    transition: box-shadow 0.2s ease, background 0.2s ease;
+  }
+  #profile-toggle:hover .avatar-ring {
+    box-shadow: 0 0 0 3px rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.25);
+  }
+
+  /* ── Mobile search input ── */
+  .mobile-search-input {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: white;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .mobile-search-input::placeholder {
+    color: rgba(255,255,255,0.4);
+  }
+  .mobile-search-input:focus {
+    background: rgba(255,255,255,0.12);
+    border-color: rgba(167,154,121,0.6);
+    outline: none;
+  }
+
+  /* ── Hamburger lines morph ── */
+  .ham-line {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: white;
+    border-radius: 999px;
+    transition: transform 0.3s ease, opacity 0.3s ease, width 0.3s ease;
+    transform-origin: center;
+  }
+  .menu-is-open .ham-line-1 { transform: translateY(6px) rotate(45deg); }
+  .menu-is-open .ham-line-2 { opacity: 0; width: 0; }
+  .menu-is-open .ham-line-3 { transform: translateY(-6px) rotate(-45deg); }

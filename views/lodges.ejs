@@ -4,10 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Lodges</title>
+  <link rel="stylesheet" href="/src/navbar.css">
   <link href="/src/output.css" rel="stylesheet"/>
 </head>
 
-<body class="bg-[#f6f7fb] min-h-screen">
+<body class="bg-[#f6f7fb] min-h-screen pt-12">
+
+  <%- include('partials/header.ejs') %>
 
 <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-12">
 
@@ -51,6 +54,9 @@
 
 </main>
 
+<%- include('partials/footer.ejs') %>
+
+<script src="/js/navbar.js"></script>
 <script src="/js/lodges.js"></script>
 </body>
 </html>

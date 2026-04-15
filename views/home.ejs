@@ -12,23 +12,105 @@
     <link rel="stylesheet" href="/src/carousel.css" />
     <title>Uponthee</title>
   </head>
-  <body class="pt-20">
-    <!-- Header  -->
+  <body
+    class="flex min-h-screen flex-col bg-gradient-to-b from-gray-50 to-white pt-20"
+  >
+    <!-- Header -->
     <%- include('partials/header.ejs')%>
 
-    <main class="space-y-10 px-8">
-      <!-- Trending Lodges carousel -->
-      <%- include('partials/carousel.ejs') %>
+    <main class="flex-1">
+      <!-- HERO SECTION -->
+      <section class="relative px-6 py-16 lg:px-12">
+        <div class="mx-auto max-w-6xl text-center">
+          <h1
+            class="text-3xl leading-tight font-semibold text-gray-900 sm:text-4xl lg:text-5xl"
+          >
+            Find the Perfect Lodge
+            <span class="text-[#55142A]">Around FUTO</span>
+          </h1>
 
-      <!-- FUTO Communities -->
-      <%- include('partials/futo-communities.ejs') %>
+          <p class="mx-auto mt-4 max-w-xl text-sm text-gray-500 sm:text-base">
+            Discover, compare and save the best student lodges near campus — all
+            in one place.
+          </p>
+
+          <!-- SEARCH BAR -->
+          <div class="mt-8 flex items-center justify-center">
+            <div
+              class="flex w-full max-w-xl overflow-hidden rounded-2xl border bg-white shadow-md"
+            >
+              <input
+                type="text"
+                placeholder="Search by location, price or lodge name..."
+                class="flex-1 px-4 py-3 text-sm outline-none"
+              />
+
+              <button
+                class="bg-[#55142A] px-6 text-sm font-medium text-white transition hover:bg-[#3f0f1f]"
+              >
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TRENDING -->
+      <section class="mt-10 px-6 lg:px-12">
+        <div class="mx-auto max-w-7xl">
+          <div class="mb-4 flex items-center justify-between">
+            <h2 class="text-lg font-semibold text-gray-900 sm:text-xl">
+              Trending Lodges
+            </h2>
+            <a href="#" class="text-sm text-[#55142A] hover:underline">
+              View all
+            </a>
+          </div>
+
+          <div class="overflow-hidden rounded-2xl">
+            <%- include('partials/carousel.ejs') %>
+          </div>
+        </div>
+      </section>
+
+      <!-- COMMUNITIES -->
+      <section class="mt-14 px-6 lg:px-12">
+        <div class="mx-auto max-w-7xl">
+          <h2 class="mb-6 text-lg font-semibold text-gray-900 sm:text-xl">
+            Explore by Community
+          </h2>
+
+          <%- include('partials/futo-communities.ejs') %>
+        </div>
+      </section>
+
+      <!-- CTA SECTION -->
+      <section class="mt-16 mb-10 px-6 lg:px-12">
+        <div
+          class="mx-auto max-w-5xl rounded-3xl bg-[#55142A] p-8 text-center text-white shadow-lg"
+        >
+          <h3 class="text-xl font-semibold sm:text-2xl">
+            Ready to find your next lodge?
+          </h3>
+
+          <p class="mt-2 text-sm text-gray-200">
+            Start exploring and save your favorite places.
+          </p>
+
+          <button
+            class="mt-6 rounded-xl bg-white px-6 py-2.5 text-sm font-medium text-[#55142A] transition hover:scale-105"
+          >
+            Get Started
+          </button>
+        </div>
+      </section>
     </main>
 
     <!-- Footer -->
     <%- include('partials/footer.ejs')%>
+
     <script src="/js/navbar.js"></script>
     <script src="/js/carousel.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   </body>
 </html>

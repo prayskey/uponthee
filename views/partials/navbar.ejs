@@ -1,199 +1,181 @@
-<!-- Desktop Nav -->
-<nav class="hidden items-center space-x-6 font-medium md:flex">
-  <ul class="flex space-x-6">
-    <li>
-      <a href="/home" class="text-sm text-white hover:text-gray-300">Home</a>
-    </li>
-    <li>
-      <a href="/lodges" class="text-sm text-white hover:text-gray-300"
-        >Lodges</a
-      >
-    </li>
-    <li>
-      <a href="/about-us" class="text-sm text-white hover:text-gray-300"
-        >About Us</a
-      >
-    </li>
-  </ul>
+    <!-- Desktop Nav -->
+    <nav class="hidden items-center gap-8 md:flex">
+      <ul class="flex items-center gap-8">
+        <li>
+          <a href="/home" class="nav-link text-sm font-medium text-white/90 hover:text-white transition-colors">Home</a>
+        </li>
+        <li>
+          <a href="/lodges" class="nav-link text-sm font-medium text-white/90 hover:text-white transition-colors">Lodges</a>
+        </li>
+        <li>
+          <a href="/about-us" class="nav-link text-sm font-medium text-white/90 hover:text-white transition-colors">About Us</a>
+        </li>
+      </ul>
 
-  <!-- Profile Dropdown -->
-  <div class="relative">
-    <button
-      id="profile-toggle"
-      class="flex cursor-pointer items-center gap-2 text-white focus:outline-none"
-    >
-      <!-- Avatar icon -->
-      <div
-        class="flex h-12 w-12 items-center justify-center rounded-full bg-white/20 transition hover:bg-white/30"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-5 w-5 text-white"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          stroke-width="2"
+      <!-- Profile dropdown -->
+      <div class="relative">
+        <button
+          id="profile-toggle"
+          class="flex cursor-pointer items-center gap-2.5 focus:outline-none"
+          aria-label="Profile menu"
+          aria-expanded="false"
+          aria-haspopup="true"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0zM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632z"
-          />
-        </svg>
+          <div class="avatar-ring flex h-9 w-9 items-center justify-center rounded-full bg-white/20">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5 text-white" style="width:18px;height:18px;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0zM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+            </svg>
+          </div>
+          <svg id="dropdown-chevron" xmlns="http://www.w3.org/2000/svg" style="width:14px;height:14px;transition:transform 0.2s ease;" fill="none" viewBox="0 0 24 24" stroke="rgba(255,255,255,0.7)" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6"/>
+          </svg>
+        </button>
+
+        <!-- Dropdown -->
+        <div
+          id="profile-dropdown"
+          class="absolute right-0 top-[calc(100%+10px)] z-50 w-52 overflow-hidden rounded-xl border border-gray-100 bg-white shadow-xl"
+          role="menu"
+        >
+          <!-- User hint -->
+          <div class="border-b border-gray-100 px-4 py-3">
+            <p class="text-xs text-gray-400">Signed in as</p>
+            <p class="truncate text-sm font-medium text-gray-800">Guest User</p>
+          </div>
+
+          <div class="py-1">
+            <a href="/profile" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors" role="menuitem">
+              <svg style="width:15px;height:15px;flex-shrink:0;color:#55142A;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0zM4.501 20.118a7.5 7.5 0 0 1 14.998 0"/></svg>
+              My Profile
+            </a>
+            <a href="/bookings" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors" role="menuitem">
+              <svg style="width:15px;height:15px;flex-shrink:0;color:#55142A;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5"/></svg>
+              My Bookings
+            </a>
+            <a href="/saved" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors" role="menuitem">
+              <svg style="width:15px;height:15px;flex-shrink:0;color:#55142A;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/></svg>
+              Saved
+            </a>
+            <a href="/history" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors" role="menuitem">
+              <svg style="width:15px;height:15px;flex-shrink:0;color:#55142A;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+              History
+            </a>
+            <a href="/settings" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors" role="menuitem">
+              <svg style="width:15px;height:15px;flex-shrink:0;color:#55142A;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/></svg>
+              Settings
+            </a>
+          </div>
+
+          <div class="border-t border-gray-100">
+            <form action="/logout" method="post">
+              <button type="submit" class="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition-colors" role="menuitem">
+                <svg style="width:15px;height:15px;flex-shrink:0;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15"/></svg>
+                Logout
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
+    </nav>
+
+    <!-- Mobile hamburger -->
+    <button
+      id="menu-toggle"
+      class="flex flex-col items-center justify-center gap-[5px] p-1 focus:outline-none md:hidden"
+      aria-label="Toggle menu"
+    >
+      <span class="ham-line ham-line-1"></span>
+      <span class="ham-line ham-line-2"></span>
+      <span class="ham-line ham-line-3"></span>
     </button>
 
-    <!-- Dropdown Menu -->
-    <div
-      id="profile-dropdown"
-      class="absolute right-0 z-50 mt-2 hidden w-48 overflow-hidden rounded-lg bg-white shadow-lg"
-    >
-      <a
-        href="/profile"
-        class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100"
-        >My Profile</a
-      >
-      <a
-        href="/bookings"
-        class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100"
-        >My Bookings</a
-      >
-      <a
-        href="/saved"
-        class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100"
-        >Saved</a
-      >
-      <a
-        href="/history"
-        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-        >History</a
-      >
-      <a
-        href="/settings"
-        class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100"
-        >Settings</a
-      >
-      <div class="border-t border-gray-100"></div>
-      <form action="/logout" method="post">
-        <button
-          type="submit"
-          class="w-full cursor-pointer px-4 py-2.5 text-left text-sm text-red-600 hover:bg-gray-100"
-        >
-          Logout
-        </button>
-      </form>
-    </div>
   </div>
-</nav>
-
-<!-- Mobile Hamburger only -->
-<div class="flex items-center md:hidden">
-  <button
-    id="menu-toggle"
-    class="text-white focus:outline-none"
-    aria-label="Open menu"
-  >
-    <svg
-      id="icon-open"
-      xmlns="http://www.w3.org/2000/svg"
-      class="h-6 w-6"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      stroke-width="2"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        d="M4 6h16M4 12h16M4 18h16"
-      />
-    </svg>
-    <svg
-      id="icon-close"
-      xmlns="http://www.w3.org/2000/svg"
-      class="hidden h-6 w-6"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      stroke-width="2"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        d="M6 18L18 6M6 6l12 12"
-      />
-    </svg>
-  </button>
-</div>
+</header>
 
 <!-- Overlay -->
 <div id="menu-overlay" class="fixed inset-0 z-40 bg-black/50"></div>
 
-<!-- Slide-out Menu -->
+<!-- Slide-out menu -->
 <div
   id="mobile-menu"
-  class="100dvh fixed top-0 left-0 z-50 flex w-64 flex-col bg-[#55142A] px-6 pt-6"
-  style="height: 100dvh"
+  class="fixed top-0 left-0 z-50 flex flex-col bg-[#55142A]"
+  style="height: 100dvh; width: 280px;"
+  aria-hidden="true"
 >
-  <!-- Search inside mobile slide menu -->
-  <div class="mb-8">
-    <form action="/search" method="post">
+  <!-- Menu header -->
+  <div class="flex items-center justify-between border-b border-white/10 px-6 py-4">
+    <span style="font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; color: white; letter-spacing: 0.05em;">Uponthee</span>
+    <button id="menu-close-btn" class="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition focus:outline-none" aria-label="Close menu">
+      <svg style="width:16px;height:16px;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Search -->
+  <div class="px-6 pt-5 pb-4">
+    <form action="/search" method="post" class="relative">
+      <svg class="absolute left-3 top-1/2 -translate-y-1/2" style="width:15px;height:15px;color:rgba(255,255,255,0.4);" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
+      </svg>
       <input
         type="search"
         name="query"
-        placeholder="Search for lodge"
-        class="w-full rounded-md border border-gray-300 px-3 py-2 text-white focus:border-[#A79A79] focus:outline-none"
+        placeholder="Search for a lodge..."
+        class="mobile-search-input w-full rounded-xl py-2.5 pl-9 pr-4 text-sm"
       />
     </form>
   </div>
 
-  <!-- Nav Links -->
-  <nav>
-    <ul class="flex flex-col space-y-6 text-sm">
-      <li>
-        <a href="/home" class="text-white hover:text-gray-300">Home</a>
-      </li>
-      <li>
-        <a href="/lodges" class="text-white hover:text-gray-300">Lodges</a>
-      </li>
-      <li>
-        <a href="/about-us" class="text-white hover:text-gray-300">About Us</a>
-      </li>
-    </ul>
+  <!-- Main nav -->
+  <nav class="px-6 pb-4">
+    <p class="mb-2 text-[10px] uppercase tracking-widest text-white/30">Menu</p>
+    <a href="/home" class="mobile-nav-link">
+      <svg style="width:16px;height:16px;color:rgba(255,255,255,0.5);flex-shrink:0;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955a1.126 1.126 0 0 1 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/></svg>
+      Home
+    </a>
+    <a href="/lodges" class="mobile-nav-link">
+      <svg style="width:16px;height:16px;color:rgba(255,255,255,0.5);flex-shrink:0;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z"/></svg>
+      Lodges
+    </a>
+    <a href="/about-us" class="mobile-nav-link">
+      <svg style="width:16px;height:16px;color:rgba(255,255,255,0.5);flex-shrink:0;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0zm-9-3.75h.008v.008H12V8.25z"/></svg>
+      About Us
+    </a>
   </nav>
 
-  <!-- Profile Section at bottom -->
-  <div
-    class="mt-auto mb-8 flex flex-col space-y-4 border-t border-white/20 pt-6"
-  >
-    <a href="/profile" class="text-sm text-white hover:text-gray-300"
-      >My Profile</a
-    >
-    <a href="/bookings" class="text-sm text-white hover:text-gray-300"
-      >My Bookings</a
-    >
-    <a href="/saved" class="text-sm text-white hover:text-gray-300">Saved</a>
-    <a href="/history" class="text-sm text-white hover:text-gray-300"
-      >History</a
-    >
-    <a href="/settings" class="text-sm text-white hover:text-gray-300"
-      >Settings</a
-    >
+  <!-- Profile section -->
+  <div class="mx-6 border-t border-white/10 pt-5 pb-4">
+    <p class="mb-2 text-[10px] uppercase tracking-widest text-white/30">Account</p>
+    <a href="/profile" class="mobile-nav-link">
+      <svg style="width:16px;height:16px;color:rgba(255,255,255,0.5);flex-shrink:0;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0zM4.501 20.118a7.5 7.5 0 0 1 14.998 0"/></svg>
+      My Profile
+    </a>
+    <a href="/bookings" class="mobile-nav-link">
+      <svg style="width:16px;height:16px;color:rgba(255,255,255,0.5);flex-shrink:0;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5"/></svg>
+      My Bookings
+    </a>
+    <a href="/saved" class="mobile-nav-link">
+      <svg style="width:16px;height:16px;color:rgba(255,255,255,0.5);flex-shrink:0;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/></svg>
+      Saved
+    </a>
+    <a href="/history" class="mobile-nav-link">
+      <svg style="width:16px;height:16px;color:rgba(255,255,255,0.5);flex-shrink:0;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+      History
+    </a>
+    <a href="/settings" class="mobile-nav-link">
+      <svg style="width:16px;height:16px;color:rgba(255,255,255,0.5);flex-shrink:0;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/></svg>
+      Settings
+    </a>
+  </div>
+
+  <!-- Logout at bottom -->
+  <div class="mt-auto border-t border-white/10 px-6 py-5">
     <form action="/logout" method="post">
-      <button
-        type="submit"
-        class="text-sm text-red-400 hover:text-red-300 focus:outline-none"
-      >
+      <button type="submit" class="flex items-center gap-3 text-sm text-red-300 hover:text-red-200 transition focus:outline-none">
+        <svg style="width:15px;height:15px;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15"/></svg>
         Logout
       </button>
     </form>
   </div>
-
-  <!-- Close button -->
-  <button
-    id="menu-close-btn"
-    class="mb-4 text-left text-sm text-white/60 hover:text-white focus:outline-none"
-  >
-    ✕ Close menu
-  </button>
 </div>
