@@ -163,7 +163,7 @@ app.post('/logout', (req, res) => {
     req.logout(err => {
         if (err) {
             res.status(500).render('error-page.ejs', { error: "An error occurred during logout. Please try again later." });
-        } else res.redirect('/sign-in');
+        } else res.redirect('/');
     })
 })
 passport.use(new LocalStrategy({ usernameField: 'email' }, async (email, password, done) => {
