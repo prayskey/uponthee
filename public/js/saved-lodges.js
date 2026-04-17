@@ -1,137 +1,110 @@
-document.addEventListener("DOMContentLoaded", () => {
-    let saved = [
-        {
-            id: 1,
-            name: "Emerald Heights Lodge",
-            location: "Port Harcourt",
-            price: 28000,
-            rating: 4.6,
-            image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
-            reason: "Good for weekend escape",
-        },
-        {
-            id: 2,
-            name: "Skyline Apartment",
-            location: "Lagos",
-            price: 45000,
-            rating: 4.8,
-            image:
-                "https://images.unsplash.com/photo-1505691938895-1758d7feb511",
-            reason: "Luxury experience",
-        },
-        {
-            id: 3,
-            name: "Palm Court Suite",
-            location: "Abuja",
-            price: 18000,
-            rating: 4.3,
-            image:
-                "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4",
-            reason: "Budget friendly stay",
-        },
-    ];
+document.addEventListener('DOMContentLoaded', function () {
 
-    const list = document.getElementById("saved-list");
-    const empty = document.getElementById("empty-state");
-    const count = document.getElementById("count");
-    const cheap = document.getElementById("cheap");
-    const premium = document.getElementById("premium");
+  let saved  = [...SAVED_DATA];
+  let sortBy = 'saved';
 
-    const format = (n) => "₦" + Number(n).toLocaleString();
+  const AFFORDABLE_THRESHOLD = 25000;
 
-    function updateStats() {
-        count.textContent = saved.length;
-        cheap.textContent = saved.filter((l) => l.price <= 30000).length;
-        premium.textContent = saved.filter((l) => l.price > 30000).length;
+  function fmt(n) {
+    return '₦' + Number(n).toLocaleString('en-NG');
+  }
+
+  function updateStats() {
+    document.getElementById('stat-total').textContent      = saved.length;
+    document.getElementById('stat-affordable').textContent = saved.filter(l => l.price <= AFFORDABLE_THRESHOLD).length;
+    document.getElementById('stat-premium').textContent    = saved.filter(l => l.price > AFFORDABLE_THRESHOLD).length;
+  }
+
+  function getSorted() {
+    const data = [...saved];
+    if (sortBy === 'price-asc')  data.sort((a, b) => a.price - b.price);
+    if (sortBy === 'price-desc') data.sort((a, b) => b.price - a.price);
+    if (sortBy === 'saved')      data.sort((a, b) => new Date(b.savedAt) - new Date(a.savedAt));
+    return data;
+  }
+
+  function stars(rating) {
+    return '★'.repeat(Math.round(rating)) + '☆'.repeat(5 - Math.round(rating));
+  }
+
+  function render() {
+    const listEl  = document.getElementById('saved-list');
+    const emptyEl = document.getElementById('empty-state');
+    updateStats();
+
+    if (!saved.length) {
+      listEl.innerHTML    = '';
+      emptyEl.style.display = 'block';
+      return;
     }
 
-    function getTag(price) {
-        if (price <= 25000) return "bg-green-100 text-green-700";
-        if (price <= 40000) return "bg-yellow-100 text-yellow-700";
-        return "bg-red-100 text-red-700";
-    }
-
-    function render() {
-        updateStats();
-
-        if (!saved.length) {
-            list.innerHTML = "";
-            empty.classList.remove("hidden");
-            return;
-        }
-
-        empty.classList.add("hidden");
-
-        list.innerHTML = saved
-            .map(
-                (l) => `
-      <div class="group bg-white border border-gray-100 rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-
-        <!-- IMAGE -->
-        <div class="relative h-44 overflow-hidden">
-          <img src="${l.image}"
-            class="w-full h-full object-cover transition duration-500 group-hover:scale-110"/>
-
-          <button class="remove absolute top-3 right-3 bg-white/90 p-2 rounded-full text-sm shadow">
-            ❤️
+    emptyEl.style.display = 'none';
+    listEl.innerHTML = getSorted().map((lodge, i) => `
+      <div class="lodge-card" style="animation-delay:${i * 70}ms;" data-id="${lodge.id}">
+        <div style="position:relative; overflow:hidden;">
+          ${lodge.image
+            ? `<img src="${lodge.image}" alt="${lodge.name}" class="lodge-img" />`
+            : `<div class="lodge-img" style="display:flex;align-items:center;justify-content:center;">
+                <svg style="width:36px;height:36px;color:#d1d5db;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor"/><circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor"/><path stroke-linecap="round" d="m21 15-5-5L5 21"/></svg>
+              </div>`
+          }
+          <div class="price-badge">${fmt(lodge.price)}/yr</div>
+          <button class="remove-btn" onclick="removeLodge(${lodge.id})" aria-label="Remove from saved">
+            <svg style="width:14px;height:14px;color:#ef4444;" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9z"/>
+            </svg>
           </button>
-
-          <span class="absolute bottom-3 left-3 text-xs px-2 py-1 rounded-full ${getTag(l.price)}">
-            ${l.price <= 25000 ? "Budget" : l.price <= 40000 ? "Mid-range" : "Premium"}
-          </span>
         </div>
-
-        <!-- CONTENT -->
-        <div class="p-4 flex flex-col gap-3">
-
-          <div>
-            <h3 class="font-semibold text-gray-900">${l.name}</h3>
-            <p class="text-sm text-gray-500">${l.location}</p>
+        <div style="padding:16px 18px 18px;">
+          <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px; margin-bottom:6px;">
+            <h3 style="font-family:'Cormorant Garamond',serif; font-size:17px; font-weight:500; color:#111827; line-height:1.3;">${lodge.name}</h3>
+            <span style="font-size:11px; color:#f59e0b; flex-shrink:0; letter-spacing:-1px;">${stars(lodge.rating)}</span>
           </div>
-
-          <!-- TAGS -->
-          <div class="flex gap-2 flex-wrap text-xs text-gray-500">
-            <span class="bg-gray-100 px-2 py-1 rounded-lg">⭐ ${l.rating}</span>
-            <span class="bg-gray-100 px-2 py-1 rounded-lg">${l.reason}</span>
+          <div style="display:flex; align-items:center; gap:4px; margin-bottom:14px;">
+            <svg style="width:12px;height:12px;color:#9ca3af;flex-shrink:0;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0z"/></svg>
+            <p style="font-size:12px; color:#9ca3af;">${lodge.location}</p>
           </div>
-
-          <!-- PRICE -->
-          <div class="flex items-center justify-between">
-            <p class="font-medium text-gray-900">${format(l.price)}</p>
-
-            <button class="view text-sm px-4 py-2 rounded-xl bg-gray-900 text-white hover:bg-gray-800 transition">
-              View
-            </button>
+          <div style="display:flex; gap:8px;">
+            <a href="/lodges/${lodge.id}" style="flex:1; display:block; text-align:center; background:#55142A; color:white; padding:9px; border-radius:10px; font-size:12px; font-weight:500; text-decoration:none; transition:background 0.2s;" onmouseover="this.style.background='#6e1a35'" onmouseout="this.style.background='#55142A'">
+              View lodge
+            </a>
+            <a href="/lodges/${lodge.id}?book=true" style="flex:1; display:block; text-align:center; background:white; color:#55142A; padding:9px; border-radius:10px; font-size:12px; font-weight:500; text-decoration:none; border:1px solid #e5e7eb; transition:background 0.15s;" onmouseover="this.style.background='#fef2f2'" onmouseout="this.style.background='white'">
+              Book now
+            </a>
           </div>
-
         </div>
       </div>
-    `,
-            )
-            .join("");
+    `).join('');
+  }
 
-        attach();
+  window.removeLodge = async function (id) {
+    const card = document.querySelector(`[data-id="${id}"]`);
+    if (card) {
+      card.style.transition = 'opacity 0.3s, transform 0.3s';
+      card.style.opacity = '0';
+      card.style.transform = 'scale(0.95)';
+      await new Promise(r => setTimeout(r, 300));
     }
+    saved = saved.filter(l => l.id !== id);
 
-    function attach() {
-        document.querySelectorAll(".remove").forEach((btn) => {
-            btn.onclick = () => {
-                const card = btn.closest("div");
-                card.classList.add("opacity-0", "scale-95");
-
-                setTimeout(() => {
-                    saved = saved.filter((l) => l.id != btn.dataset.id);
-                    render();
-                }, 200);
-            };
-        });
-
-        document.querySelectorAll(".view").forEach((btn, i) => {
-            btn.onclick = () => {
-                alert("Viewing lodge details...");
-            };
-        });
+    try {
+      await fetch(`/saved/${id}`, { method: 'DELETE', credentials: 'same-origin' });
+    } catch (err) {
+      console.error('Remove failed:', err);
     }
 
     render();
+  };
+
+  // Sort buttons
+  document.querySelectorAll('.sort-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      sortBy = btn.dataset.sort;
+      render();
+    });
+  });
+
+  render();
 });
