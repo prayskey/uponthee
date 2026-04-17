@@ -15,11 +15,11 @@ const PORT = process.env.PORT;
 const saltRounds = 10;
 
 const db = new pg.Pool({
-    // connectionString: process.env.SUPABASE_CONNECTION_STRING,
-    connectionString: process.env.DATABASE_URL,
-    // ssl: {
-    //     rejectUnauthorized: false,
-    // }
+    connectionString: process.env.SUPABASE_CONNECTION_STRING,
+    // connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false,
+    }
 });
 const pgSession = connectPg(session);
 
@@ -54,7 +54,7 @@ app.use(passport.session());
 app.get('/', (req, res) => {
     if (!req.isAuthenticated()) {
         return res.render('about-us.ejs');
-    } else return res.render('home.ejs');
+    } else return res.render('home.ejs', { user: req.user });
 });
 app.get('/sign-up', (req, res) => {
     if (!req.isAuthenticated()) {
@@ -69,12 +69,12 @@ app.get('/sign-in', (req, res) => {
 app.get('/password-reset', (req, res) => {
     if (!req.isAuthenticated()) {
         return res.redirect('/');
-    } else res.render('password-reset.ejs');
+    } else res.render('password-reset.ejs', { user: req.user });
 })
 app.get('/home', (req, res) => {
     if (!req.isAuthenticated()) {
         return res.redirect('/');
-    } else res.render('home.ejs');
+    } else res.render('home.ejs', { user: req.user });
 });
 app.get('/profile', (req, res) => {
     if (!req.isAuthenticated()) {
@@ -86,32 +86,32 @@ app.get('/profile', (req, res) => {
 app.get('/lodges', (req, res) => {
     if (!req.isAuthenticated()) {
         res.redirect('/sign-in');
-    } else res.render('lodges.ejs');
+    } else res.render('lodges.ejs', { user: req.user });
 });
 app.get('/about-us', (req, res) => {
     if (!req.isAuthenticated()) {
         res.redirect('/');
-    } else res.render('about-us.ejs');
+    } else res.render('about-us.ejs', { user: req.user });
 });
 app.get('/bookings', (req, res) => {
     if (!req.isAuthenticated()) {
         res.redirect('/');
-    } else res.render('bookings.ejs');
+    } else res.render('bookings.ejs', { user: req.user });
 });
 app.get('/saved', (req, res) => {
     if (!req.isAuthenticated()) {
         res.redirect('/');
-    } else res.render('saved-lodges.ejs');
+    } else res.render('saved-lodges.ejs', { user: req.user });
 });
 app.get('/history', (req, res) => {
     if (!req.isAuthenticated()) {
         res.redirect('/');
-    } else res.render('history.ejs');
+    } else res.render('history.ejs', { user: req.user });
 });
 app.get('/settings', (req, res) => {
     if (!req.isAuthenticated()) {
         res.redirect('/');
-    } else res.render('settings.ejs');
+    } else res.render('settings.ejs', { user: req.user });
 })
 
 ////////////////////////////////////////////////////////////
@@ -178,7 +178,7 @@ app.get('/select-lodge/:id', (req, res) => {
     }
 
     // ✅ Render page (matches your EJS perfectly)
-    res.render('selected-lodge', { lodge });
+    res.render('selected-lodge', { lodge, user: req.user });
 });
 
 
@@ -263,7 +263,7 @@ passport.deserializeUser(async (user, done) => {
         done(err);
     }
 });
-app.listen(PORT, () => {
-    console.log(`Server is running at PORT: ${PORT}`);
-});
-// export default app;
+// app.listen(PORT, () => {
+//     console.log(`Server is running at PORT: ${PORT}`);
+// });
+export default app;
