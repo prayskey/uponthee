@@ -11,146 +11,75 @@
   <link rel="stylesheet" href="/src/navbar.css" />
   <style>
     body { font-family: 'DM Sans', sans-serif; background: #f8f6f3; }
-
-    .setting-panel {
-      background: white;
-      border: 1px solid rgba(0,0,0,0.06);
-      border-radius: 20px;
-      overflow: hidden;
-      transition: box-shadow 0.2s;
-    }
-    .setting-panel:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
-
-    .setting-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px 24px;
-      cursor: pointer;
-      user-select: none;
-      transition: background 0.15s;
-    }
-    .setting-header:hover { background: #fafaf9; }
-
-    .setting-body {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.4s cubic-bezier(0.22,1,0.36,1);
-      border-top: 0px solid rgba(0,0,0,0.06);
-    }
-    .setting-body.open {
-      max-height: 600px;
-      border-top-width: 1px;
-    }
-
-    .setting-body-inner { padding: 24px; }
-
-    .chev {
-      transition: transform 0.3s cubic-bezier(0.22,1,0.36,1);
-      flex-shrink: 0;
-    }
-    .open-chev { transform: rotate(180deg); }
-
-    .input-field {
-      width: 100%; border: 1px solid #e5e7eb; border-radius: 12px;
-      padding: 10px 14px; font-size: 13px; font-family: 'DM Sans', sans-serif;
-      color: #111827; background: #fff; transition: border-color 0.2s, box-shadow 0.2s; outline: none;
-    }
-    .input-field:focus { border-color: #55142A; box-shadow: 0 0 0 3px rgba(85,20,42,0.08); }
-
+    .setting-panel { background:white; border:1px solid rgba(0,0,0,0.06); border-radius:20px; overflow:hidden; transition:box-shadow 0.2s; }
+    .setting-panel:hover { box-shadow:0 4px 20px rgba(0,0,0,0.05); }
+    .setting-header { display:flex; align-items:center; justify-content:space-between; padding:20px 24px; cursor:pointer; user-select:none; transition:background 0.15s; }
+    .setting-header:hover { background:#fafaf9; }
+    .setting-body { max-height:0; overflow:hidden; transition:max-height 0.4s cubic-bezier(0.22,1,0.36,1); border-top:0px solid rgba(0,0,0,0.06); }
+    .setting-body.open { max-height:600px; border-top-width:1px; }
+    .chev { transition:transform 0.3s cubic-bezier(0.22,1,0.36,1); flex-shrink:0; }
+    .open-chev { transform:rotate(180deg); }
+    .input-field { width:100%; border:1px solid #e5e7eb; border-radius:12px; padding:10px 14px; font-size:13px; font-family:'DM Sans',sans-serif; color:#111827; background:#fff; transition:border-color 0.2s,box-shadow 0.2s; outline:none; box-sizing:border-box; }
+    .input-field:focus { border-color:#55142A; box-shadow:0 0 0 3px rgba(85,20,42,0.08); }
     /* Toggle switch */
-    .toggle-wrap { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f3f4f6; }
-    .toggle-wrap:last-child { border-bottom: none; }
-    .toggle { position: relative; width: 40px; height: 22px; flex-shrink: 0; }
-    .toggle input { opacity: 0; width: 0; height: 0; }
-    .toggle-slider {
-      position: absolute; inset: 0; border-radius: 999px;
-      background: #e5e7eb; cursor: pointer; transition: background 0.25s;
-    }
-    .toggle-slider::before {
-      content: ''; position: absolute; left: 3px; top: 3px;
-      width: 16px; height: 16px; border-radius: 50%; background: white;
-      transition: transform 0.25s cubic-bezier(0.22,1,0.36,1);
-      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-    }
-    .toggle input:checked + .toggle-slider { background: #55142A; }
-    .toggle input:checked + .toggle-slider::before { transform: translateX(18px); }
-
-    .btn-danger { background: #dc2626; color: white; border: none; border-radius: 12px; padding: 11px 20px; font-size: 13px; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer; width: 100%; transition: background 0.2s; }
-    .btn-danger:hover { background: #b91c1c; }
-
-    .btn-primary { background: #55142A; color: white; border: none; border-radius: 12px; padding: 11px 20px; font-size: 13px; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer; width: 100%; transition: background 0.2s; }
-    .btn-primary:hover { background: #6e1a35; }
-
-    .btn-outline { background: white; color: #374151; border: 1px solid #e5e7eb; border-radius: 12px; padding: 11px 20px; font-size: 13px; font-family: 'DM Sans', sans-serif; cursor: pointer; width: 100%; text-align: left; transition: background 0.15s; display: flex; align-items: center; gap: 10px; }
-    .btn-outline:hover { background: #f9fafb; }
-
-    .toast {
-      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
-      background: #111; color: #fff; padding: 12px 20px; border-radius: 12px;
-      font-size: 13px; z-index: 100; opacity: 0;
-      transition: transform 0.3s cubic-bezier(0.22,1,0.36,1), opacity 0.3s;
-    }
-    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-    .toast.success { background: #166534; }
-    .toast.error { background: #991b1b; }
+    .toggle { position:relative; width:40px; height:22px; flex-shrink:0; }
+    .toggle input { opacity:0; width:0; height:0; }
+    .toggle-slider { position:absolute; inset:0; border-radius:999px; background:#e5e7eb; cursor:pointer; transition:background 0.25s; }
+    .toggle-slider::before { content:''; position:absolute; left:3px; top:3px; width:16px; height:16px; border-radius:50%; background:white; transition:transform 0.25s cubic-bezier(0.22,1,0.36,1); box-shadow:0 1px 4px rgba(0,0,0,0.2); }
+    .toggle input:checked + .toggle-slider { background:#55142A; }
+    .toggle input:checked + .toggle-slider::before { transform:translateX(18px); }
+    .toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px); background:#111; color:#fff; padding:12px 20px; border-radius:12px; font-size:13px; z-index:100; opacity:0; transition:transform 0.3s cubic-bezier(0.22,1,0.36,1),opacity 0.3s; }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+    .toast.success { background:#166534; }
+    .toast.error { background:#991b1b; }
   </style>
 </head>
-
 <body class="min-h-screen pt-16">
 
   <%- include('partials/header.ejs') %>
 
   <!-- Hero -->
-  <div style="background:#55142A; padding:48px 24px 64px;">
-    <div style="max-width:760px; margin:0 auto;">
-      <p style="font-size:13px; color:#A79A79; margin-bottom:8px; font-family:'Cormorant Garamond',serif; letter-spacing:0.05em;">Your account</p>
-      <h1 style="font-family:'Cormorant Garamond',serif; font-size:clamp(28px,4vw,42px); font-weight:500; color:white;">Settings</h1>
-      <p style="font-size:13px; color:rgba(255,255,255,0.5); margin-top:6px;">Manage your preferences, security and privacy</p>
+  <div class="bg-[#55142A] px-6 pb-16 pt-12 md:px-12">
+    <div class="mx-auto max-w-3xl">
+      <p class="mb-2 text-[13px] tracking-[0.05em] text-[#A79A79]" style="font-family:'Cormorant Garamond',serif;">Your account</p>
+      <h1 class="text-4xl font-medium text-white md:text-5xl" style="font-family:'Cormorant Garamond',serif;">Settings</h1>
+      <p class="mt-2 text-[13px] text-white/50">Manage your preferences, security and privacy</p>
     </div>
   </div>
 
-  <main style="max-width:760px; margin:0 auto; padding:0 24px 80px;">
+  <main class="mx-auto max-w-3xl px-6 pb-20 md:px-12">
 
-    <div style="display:flex; flex-direction:column; gap:12px; margin-top:-24px;">
+    <div class="mt-[-24px] flex flex-col gap-3">
 
       <!-- Profile preferences -->
       <div class="setting-panel">
         <div class="setting-header" onclick="togglePanel(this)">
-          <div style="display:flex; align-items:center; gap:14px;">
-            <div style="width:36px;height:36px;background:rgba(85,20,42,0.07);border-radius:10px;display:flex;align-items:center;justify-content:center;">
-              <svg style="width:17px;height:17px;color:#55142A;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0zM4.501 20.118a7.5 7.5 0 0 1 14.998 0"/></svg>
+          <div class="flex items-center gap-3.5">
+            <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#55142A]/[0.07]">
+              <svg class="h-[17px] w-[17px] text-[#55142A]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0zM4.501 20.118a7.5 7.5 0 0 1 14.998 0"/></svg>
             </div>
             <div>
-              <p style="font-size:14px; font-weight:500; color:#111827;">Profile preferences</p>
-              <p style="font-size:12px; color:#9ca3af;">Visibility & personalization</p>
+              <p class="text-sm font-medium text-gray-900">Profile preferences</p>
+              <p class="text-xs text-gray-400">Visibility & personalization</p>
             </div>
           </div>
-          <svg class="chev" style="width:18px;height:18px;color:#9ca3af;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          <svg class="chev h-[18px] w-[18px] text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
         </div>
         <div class="setting-body">
-          <div class="setting-body-inner">
-            <div class="toggle-wrap">
+          <div class="p-6 space-y-0">
+            <% [
+              { label:'Show profile publicly', desc:'Let other users see your profile', checked:true },
+              { label:'Enable recommendations', desc:'Get personalized lodge suggestions', checked:true },
+              { label:'Email notifications', desc:'Booking confirmations and updates', checked:true },
+            ].forEach(function(item) { %>
+            <div class="flex items-center justify-between border-b border-gray-100 py-3 last:border-none">
               <div>
-                <p style="font-size:13px; font-weight:500; color:#374151;">Show profile publicly</p>
-                <p style="font-size:12px; color:#9ca3af; margin-top:2px;">Let other users see your profile</p>
+                <p class="text-[13px] font-medium text-gray-700"><%= item.label %></p>
+                <p class="mt-0.5 text-xs text-gray-400"><%= item.desc %></p>
               </div>
-              <label class="toggle"><input type="checkbox" checked /><span class="toggle-slider"></span></label>
+              <label class="toggle"><input type="checkbox" <%= item.checked ? 'checked' : '' %> /><span class="toggle-slider"></span></label>
             </div>
-            <div class="toggle-wrap">
-              <div>
-                <p style="font-size:13px; font-weight:500; color:#374151;">Enable recommendations</p>
-                <p style="font-size:12px; color:#9ca3af; margin-top:2px;">Get personalized lodge suggestions</p>
-              </div>
-              <label class="toggle"><input type="checkbox" checked /><span class="toggle-slider"></span></label>
-            </div>
-            <div class="toggle-wrap">
-              <div>
-                <p style="font-size:13px; font-weight:500; color:#374151;">Email notifications</p>
-                <p style="font-size:12px; color:#9ca3af; margin-top:2px;">Booking confirmations and updates</p>
-              </div>
-              <label class="toggle"><input type="checkbox" checked /><span class="toggle-slider"></span></label>
-            </div>
+            <% }); %>
           </div>
         </div>
       </div>
@@ -158,34 +87,34 @@
       <!-- Security -->
       <div class="setting-panel">
         <div class="setting-header" onclick="togglePanel(this)">
-          <div style="display:flex; align-items:center; gap:14px;">
-            <div style="width:36px;height:36px;background:rgba(85,20,42,0.07);border-radius:10px;display:flex;align-items:center;justify-content:center;">
-              <svg style="width:17px;height:17px;color:#55142A;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25z"/></svg>
+          <div class="flex items-center gap-3.5">
+            <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#55142A]/[0.07]">
+              <svg class="h-[17px] w-[17px] text-[#55142A]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25z"/></svg>
             </div>
             <div>
-              <p style="font-size:14px; font-weight:500; color:#111827;">Security</p>
-              <p style="font-size:12px; color:#9ca3af;">Password & authentication</p>
+              <p class="text-sm font-medium text-gray-900">Security</p>
+              <p class="text-xs text-gray-400">Password & authentication</p>
             </div>
           </div>
-          <svg class="chev" style="width:18px;height:18px;color:#9ca3af;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          <svg class="chev h-[18px] w-[18px] text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
         </div>
         <div class="setting-body">
-          <div class="setting-body-inner">
-            <form id="pw-form" style="display:flex; flex-direction:column; gap:14px;">
+          <div class="p-6">
+            <form id="pw-form" class="flex flex-col gap-3.5">
               <div>
-                <label style="display:block; font-size:11px; font-weight:500; color:#6b7280; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px;">Current password</label>
+                <label class="mb-1.5 block text-[11px] font-medium uppercase tracking-[0.08em] text-gray-500">Current password</label>
                 <input type="password" name="current_password" class="input-field" placeholder="••••••••" />
               </div>
               <div>
-                <label style="display:block; font-size:11px; font-weight:500; color:#6b7280; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px;">New password</label>
+                <label class="mb-1.5 block text-[11px] font-medium uppercase tracking-[0.08em] text-gray-500">New password</label>
                 <input type="password" name="new_password" class="input-field" id="new-pw" placeholder="Min. 8 characters" />
               </div>
               <div>
-                <label style="display:block; font-size:11px; font-weight:500; color:#6b7280; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px;">Confirm password</label>
+                <label class="mb-1.5 block text-[11px] font-medium uppercase tracking-[0.08em] text-gray-500">Confirm password</label>
                 <input type="password" name="confirm_password" class="input-field" id="confirm-pw" placeholder="Re-enter new password" />
-                <p id="pw-mismatch" style="font-size:12px;color:#dc2626;margin-top:5px;display:none;">Passwords do not match</p>
+                <p id="pw-mismatch" class="mt-1.5 hidden text-xs text-red-500">Passwords do not match</p>
               </div>
-              <button type="submit" class="btn-primary">Update password</button>
+              <button type="submit" class="w-full rounded-xl bg-[#55142A] py-2.5 text-sm font-medium text-white transition hover:bg-[#6e1a35]">Update password</button>
             </form>
           </div>
         </div>
@@ -194,25 +123,25 @@
       <!-- Privacy -->
       <div class="setting-panel">
         <div class="setting-header" onclick="togglePanel(this)">
-          <div style="display:flex; align-items:center; gap:14px;">
-            <div style="width:36px;height:36px;background:rgba(85,20,42,0.07);border-radius:10px;display:flex;align-items:center;justify-content:center;">
-              <svg style="width:17px;height:17px;color:#55142A;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
+          <div class="flex items-center gap-3.5">
+            <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#55142A]/[0.07]">
+              <svg class="h-[17px] w-[17px] text-[#55142A]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
             </div>
             <div>
-              <p style="font-size:14px; font-weight:500; color:#111827;">Privacy</p>
-              <p style="font-size:12px; color:#9ca3af;">Data control & export</p>
+              <p class="text-sm font-medium text-gray-900">Privacy</p>
+              <p class="text-xs text-gray-400">Data control & export</p>
             </div>
           </div>
-          <svg class="chev" style="width:18px;height:18px;color:#9ca3af;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          <svg class="chev h-[18px] w-[18px] text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
         </div>
         <div class="setting-body">
-          <div class="setting-body-inner" style="display:flex; flex-direction:column; gap:10px;">
-            <button class="btn-outline" onclick="showToast('Your data export has been requested. You will receive an email shortly.','success')">
-              <svg style="width:16px;height:16px;color:#6b7280;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+          <div class="flex flex-col gap-2.5 p-6">
+            <button onclick="showToast('Your data export has been requested. You will receive an email shortly.','success')" class="flex w-full items-center gap-2.5 rounded-xl border border-gray-200 bg-white px-4 py-3 text-left text-[13px] text-gray-700 transition hover:bg-gray-50">
+              <svg class="h-4 w-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
               Download my data
             </button>
-            <button class="btn-outline" onclick="showToast('Session management coming soon.','')">
-              <svg style="width:16px;height:16px;color:#6b7280;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0H3"/></svg>
+            <button onclick="showToast('Session management coming soon.', '')" class="flex w-full items-center gap-2.5 rounded-xl border border-gray-200 bg-white px-4 py-3 text-left text-[13px] text-gray-700 transition hover:bg-gray-50">
+              <svg class="h-4 w-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0H3"/></svg>
               Manage active sessions
             </button>
           </div>
@@ -221,22 +150,22 @@
 
       <!-- Danger zone -->
       <div class="setting-panel" style="border-color:rgba(220,38,38,0.15);">
-        <div class="setting-header" onclick="togglePanel(this)" style="background:rgba(254,242,242,0.5);">
-          <div style="display:flex; align-items:center; gap:14px;">
-            <div style="width:36px;height:36px;background:rgba(220,38,38,0.08);border-radius:10px;display:flex;align-items:center;justify-content:center;">
-              <svg style="width:17px;height:17px;color:#dc2626;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg>
+        <div class="setting-header bg-red-50/50" onclick="togglePanel(this)">
+          <div class="flex items-center gap-3.5">
+            <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-red-600/8">
+              <svg class="h-[17px] w-[17px] text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg>
             </div>
             <div>
-              <p style="font-size:14px; font-weight:500; color:#dc2626;">Danger zone</p>
-              <p style="font-size:12px; color:#9ca3af;">Permanent and irreversible actions</p>
+              <p class="text-sm font-medium text-red-600">Danger zone</p>
+              <p class="text-xs text-gray-400">Permanent and irreversible actions</p>
             </div>
           </div>
-          <svg class="chev" style="width:18px;height:18px;color:#9ca3af;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          <svg class="chev h-[18px] w-[18px] text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
         </div>
         <div class="setting-body">
-          <div class="setting-body-inner">
-            <p style="font-size:13px; color:#6b7280; margin-bottom:16px; line-height:1.6;">Deleting your account is permanent. All your bookings, saved lodges and data will be erased and cannot be recovered.</p>
-            <button class="btn-danger" id="delete-btn" onclick="confirmDelete()">Delete my account</button>
+          <div class="p-6">
+            <p class="mb-4 text-[13px] leading-[1.6] text-gray-500">Deleting your account is permanent. All your bookings, saved lodges and data will be erased and cannot be recovered.</p>
+            <button onclick="confirmDelete()" class="w-full rounded-xl bg-red-600 py-2.5 text-sm font-medium text-white transition hover:bg-red-700">Delete my account</button>
           </div>
         </div>
       </div>
@@ -244,18 +173,18 @@
     </div>
   </main>
 
-  <!-- Delete confirmation modal -->
-  <div id="delete-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:60; align-items:center; justify-content:center; padding:16px;">
-    <div style="background:white; border-radius:20px; padding:32px; max-width:420px; width:100%; animation:slideUp 0.3s cubic-bezier(0.22,1,0.36,1);">
-      <div style="width:48px;height:48px;background:#fee2e2;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
-        <svg style="width:22px;height:22px;color:#dc2626;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg>
+  <!-- Delete modal -->
+  <div id="delete-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/45 p-4">
+    <div class="w-full max-w-[420px] rounded-[20px] bg-white p-8">
+      <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-red-100">
+        <svg class="h-5 w-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg>
       </div>
-      <h3 style="font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:500; color:#111827; margin-bottom:8px;">Delete account?</h3>
-      <p style="font-size:13px; color:#6b7280; line-height:1.7; margin-bottom:20px;">This will permanently delete your account and all associated data. Type <strong>DELETE</strong> to confirm.</p>
-      <input type="text" id="delete-confirm-input" placeholder="Type DELETE" class="input-field" style="margin-bottom:16px;" />
-      <div style="display:flex; gap:10px;">
-        <button class="btn-danger" id="confirm-delete-btn" onclick="executeDelete()" disabled style="opacity:0.5;">Yes, delete account</button>
-        <button onclick="document.getElementById('delete-modal').style.display='none'" style="flex:1;background:#f3f4f6;color:#374151;border:none;border-radius:12px;padding:11px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;">Cancel</button>
+      <h3 class="mb-2 text-[22px] font-medium text-gray-900" style="font-family:'Cormorant Garamond',serif;">Delete account?</h3>
+      <p class="mb-5 text-[13px] leading-[1.7] text-gray-500">This will permanently delete your account and all associated data. Type <strong>DELETE</strong> to confirm.</p>
+      <input type="text" id="delete-confirm-input" placeholder="Type DELETE" class="input-field mb-4" />
+      <div class="flex gap-2.5">
+        <button id="confirm-delete-btn" onclick="executeDelete()" disabled class="flex-1 rounded-xl bg-red-600 py-2.5 text-sm font-medium text-white opacity-50 transition hover:bg-red-700 disabled:cursor-not-allowed">Yes, delete account</button>
+        <button onclick="document.getElementById('delete-modal').classList.add('hidden');document.getElementById('delete-modal').classList.remove('flex');document.body.style.overflow='';" class="flex-1 rounded-xl bg-gray-100 py-2.5 text-sm text-gray-700 transition hover:bg-gray-200">Cancel</button>
       </div>
     </div>
   </div>

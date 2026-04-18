@@ -1,36 +1,36 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    // ─────────────────────────────
-    // DUMMY DATA
-    // ─────────────────────────────
-    const LODGES = Array.from({ length: 23 }, (_, i) => ({
-        id: i + 1,
-        name: `Serenity Lodge ${i + 1}`,
-        location: "Lekki Phase 1",
-        price: 42000 + i * 1200,
-        rating: (4 + Math.random()).toFixed(1),
-        image: null
-    }));
+  // ─────────────────────────────
+  // DUMMY DATA
+  // ─────────────────────────────
+  const LODGES = Array.from({ length: 23 }, (_, i) => ({
+    id: i + 1,
+    name: `Serenity Lodge ${i + 1}`,
+    location: "Lekki Phase 1",
+    price: 42000 + i * 1200,
+    rating: (4 + Math.random()).toFixed(1),
+    image: null
+  }));
 
-    // ─────────────────────────────
-    // STATE
-    // ─────────────────────────────
-    let currentPage = 1;
-    const perPage = 10;
+  // ─────────────────────────────
+  // STATE
+  // ─────────────────────────────
+  let currentPage = 1;
+  const perPage = 10;
 
-    const grid = document.getElementById("lodges-grid");
-    const empty = document.getElementById("empty");
-    const prevBtn = document.getElementById("prevBtn");
-    const nextBtn = document.getElementById("nextBtn");
-    const pageInfo = document.getElementById("pageInfo");
+  const grid = document.getElementById("lodges-grid");
+  const empty = document.getElementById("empty");
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+  const pageInfo = document.getElementById("pageInfo");
 
-    const format = (n) => "₦" + Number(n).toLocaleString();
+  const format = (n) => "₦" + Number(n).toLocaleString();
 
-    // ─────────────────────────────
-    // CARD UI (UPGRADED)
-    // ─────────────────────────────
-    function card(lodge) {
-        return `
+  // ─────────────────────────────
+  // CARD UI (UPGRADED)
+  // ─────────────────────────────
+  function card(lodge) {
+    return `
       <div class="group bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 active:scale-[0.99]">
 
         <!-- IMAGE -->
@@ -79,53 +79,53 @@ document.addEventListener("DOMContentLoaded", () => {
 
       </div>
     `;
+  }
+
+  // ─────────────────────────────
+  // RENDER
+  // ─────────────────────────────
+  function render() {
+
+    const start = (currentPage - 1) * perPage;
+    const end = start + perPage;
+
+    const pageData = LODGES.slice(start, end);
+
+    if (pageData.length === 0) {
+      grid.innerHTML = "";
+      empty.classList.remove("hidden");
+      return;
     }
 
-    // ─────────────────────────────
-    // RENDER
-    // ─────────────────────────────
-    function render() {
+    empty.classList.add("hidden");
 
-        const start = (currentPage - 1) * perPage;
-        const end = start + perPage;
+    grid.innerHTML = pageData.map(card).join("");
 
-        const pageData = LODGES.slice(start, end);
+    const totalPages = Math.ceil(LODGES.length / perPage);
 
-        if (pageData.length === 0) {
-            grid.innerHTML = "";
-            empty.classList.remove("hidden");
-            return;
-        }
+    pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
 
-        empty.classList.add("hidden");
+    prevBtn.disabled = currentPage === 1;
+    nextBtn.disabled = currentPage === totalPages;
+  }
 
-        grid.innerHTML = pageData.map(card).join("");
-
-        const totalPages = Math.ceil(LODGES.length / perPage);
-
-        pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
-
-        prevBtn.disabled = currentPage === 1;
-        nextBtn.disabled = currentPage === totalPages;
+  // ─────────────────────────────
+  // EVENTS
+  // ─────────────────────────────
+  prevBtn.addEventListener("click", () => {
+    if (currentPage > 1) {
+      currentPage--;
+      render();
     }
+  });
 
-    // ─────────────────────────────
-    // EVENTS
-    // ─────────────────────────────
-    prevBtn.addEventListener("click", () => {
-        if (currentPage > 1) {
-            currentPage--;
-            render();
-        }
-    });
+  nextBtn.addEventListener("click", () => {
+    const totalPages = Math.ceil(LODGES.length / perPage);
+    if (currentPage < totalPages) {
+      currentPage++;
+      render();
+    }
+  });
 
-    nextBtn.addEventListener("click", () => {
-        const totalPages = Math.ceil(LODGES.length / perPage);
-        if (currentPage < totalPages) {
-            currentPage++;
-            render();
-        }
-    });
-
-    render();
+  render();
 });

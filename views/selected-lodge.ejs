@@ -11,213 +11,172 @@
   <link rel="stylesheet" href="/src/navbar.css" />
   <style>
     body { font-family: 'DM Sans', sans-serif; background: #f8f6f3; }
-
-    /* Image gallery */
     .gallery-main { width:100%; aspect-ratio:16/9; max-height:520px; object-fit:cover; border-radius:20px; display:block; cursor:pointer; transition:opacity 0.2s; }
     .gallery-main:hover { opacity:0.95; }
-    .gallery-thumb { width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:12px; cursor:pointer; border:2px solid transparent; transition:border-color 0.2s, transform 0.2s; }
+    .gallery-thumb { width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:12px; cursor:pointer; border:2px solid transparent; transition:border-color 0.2s,transform 0.2s; }
     .gallery-thumb:hover { transform:scale(1.03); }
     .gallery-thumb.active { border-color:#55142A; }
-
-    /* Amenity pill */
-    .amenity { display:inline-flex; align-items:center; gap:6px; padding:6px 14px; border-radius:999px; background:white; border:1px solid rgba(0,0,0,0.07); font-size:13px; color:#374151; }
-
-    /* Sticky booking card */
-    .book-card { position:sticky; top:84px; background:white; border:1px solid rgba(0,0,0,0.07); border-radius:20px; padding:24px; box-shadow:0 4px 24px rgba(0,0,0,0.06); }
-
-    /* Input */
-    .field { width:100%; border:1px solid #e5e7eb; border-radius:10px; padding:10px 14px; font-size:13px; font-family:'DM Sans',sans-serif; color:#111827; background:white; outline:none; transition:border-color 0.2s, box-shadow 0.2s; box-sizing:border-box; }
+    .amenity { display:inline-flex; align-items:center; padding:6px 14px; border-radius:999px; background:white; border:1px solid rgba(0,0,0,0.07); font-size:13px; color:#374151; }
+    .book-card { position:sticky; top:84px; }
+    .field { width:100%; border:1px solid #e5e7eb; border-radius:10px; padding:10px 14px; font-size:13px; font-family:'DM Sans',sans-serif; color:#111827; background:white; outline:none; transition:border-color 0.2s,box-shadow 0.2s; box-sizing:border-box; }
     .field:focus { border-color:#55142A; box-shadow:0 0 0 3px rgba(85,20,42,0.08); }
-
-    /* Book button */
-    .book-btn { width:100%; background:#55142A; color:white; border:none; border-radius:12px; padding:14px; font-size:14px; font-weight:500; font-family:'DM Sans',sans-serif; cursor:pointer; transition:background 0.2s, transform 0.15s; }
-    .book-btn:hover { background:#6e1a35; }
-    .book-btn:active { transform:scale(0.99); }
-    .book-btn:disabled { background:#b08090; cursor:not-allowed; }
-
-    /* Review card */
-    .review-card { background:white; border:1px solid rgba(0,0,0,0.06); border-radius:16px; padding:18px 20px; }
-
-    /* Lightbox */
     .lightbox { position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:100; display:none; align-items:center; justify-content:center; padding:20px; }
     .lightbox.open { display:flex; }
     .lightbox img { max-width:100%; max-height:90vh; border-radius:12px; object-fit:contain; }
-
     @keyframes fadeIn { from{opacity:0} to{opacity:1} }
-    .fade-in { animation: fadeIn 0.4s ease forwards; }
-
-    /* Toast */
+    .fade-in { animation:fadeIn 0.4s ease forwards; }
     .toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px); background:#111; color:#fff; padding:12px 20px; border-radius:12px; font-size:13px; z-index:200; opacity:0; transition:transform 0.3s cubic-bezier(0.22,1,0.36,1),opacity 0.3s; white-space:nowrap; }
     .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
     .toast.success { background:#166534; }
     .toast.error { background:#991b1b; }
-
     @media(max-width:1024px) { .book-card { position:static; } }
   </style>
 </head>
-
 <body class="min-h-screen pt-16">
 
   <%- include('partials/header.ejs') %>
 
   <%
-    // Fallback data if not passed from server
     const l = typeof lodge !== 'undefined' ? lodge : {
-      id: 1,
-      name: 'Emerald Heights Lodge',
-      community: 'Umuchima',
-      location: 'Umuchima, near FUTO gate',
-      price: 120000,
-      caution: 10000,
-      rating: 4.8,
-      reviews_count: 34,
-      available: true,
-      description: 'A well-maintained lodge situated minutes from the FUTO main gate. Features spacious rooms, reliable water supply, good security, and a calm environment ideal for serious students.',
-      amenities: ['Borehole water', 'Security', 'Parking', 'Balcony', 'NEPA & Generator', '24/7 Gate', 'Tiled floors', 'POP ceiling'],
-      rooms_available: 3,
-      images: ['/images/lodge1.jpg', '/images/lodge2.jpg', '/images/lodge3.jpg', '/images/lodge4.jpg'],
-      landlord: { name: 'Mr. Emmanuel Obi', phone: '08012345678', response_time: 'Usually within 1 hour' },
-      reviews: [
+      id:1, name:'Emerald Heights Lodge', community:'Umuchima', location:'Umuchima, near FUTO gate',
+      price:120000, caution:10000, rating:4.8, reviews_count:34, available:true,
+      description:'A well-maintained lodge situated minutes from the FUTO main gate. Features spacious rooms, reliable water supply, good security, and a calm environment ideal for serious students.',
+      amenities:['Borehole water','Security','Parking','Balcony','NEPA & Generator','24/7 Gate','Tiled floors','POP ceiling'],
+      rooms_available:3,
+      images:['/images/lodge1.jpg','/images/lodge2.jpg','/images/lodge3.jpg','/images/lodge4.jpg'],
+      landlord:{ name:'Mr. Emmanuel Obi', phone:'08012345678', response_time:'Usually within 1 hour' },
+      reviews:[
         { name:'Chidinma A.', rating:5, date:'March 2026', comment:'Very clean and secure. Landlord is responsive. Recommended.' },
-        { name:'Emeka O.', rating:4, date:'Jan 2026', comment:'Good lodge, water supply is consistent. Quiet environment.' },
+        { name:'Emeka O.',    rating:4, date:'Jan 2026',   comment:'Good lodge, water supply is consistent. Quiet environment.' },
       ]
     };
   %>
 
-  <main style="max-width:1200px; margin:0 auto; padding:24px 20px 80px;">
+  <main class="mx-auto max-w-7xl px-5 pb-20 pt-6">
 
     <!-- Breadcrumb -->
-    <div style="display:flex; align-items:center; gap:8px; margin-bottom:20px; flex-wrap:wrap;">
-      <a href="/home" style="font-size:12px; color:#9ca3af; text-decoration:none;" onmouseover="this.style.color='#55142A'" onmouseout="this.style.color='#9ca3af'">Home</a>
-      <span style="font-size:12px; color:#d1d5db;">/</span>
-      <a href="/lodges" style="font-size:12px; color:#9ca3af; text-decoration:none;" onmouseover="this.style.color='#55142A'" onmouseout="this.style.color='#9ca3af'">Lodges</a>
-      <span style="font-size:12px; color:#d1d5db;">/</span>
-      <span style="font-size:12px; color:#374151;"><%= l.name %></span>
+    <div class="mb-5 flex flex-wrap items-center gap-2 text-xs text-gray-400">
+      <a href="/home" class="transition hover:text-[#55142A]">Home</a>
+      <span class="text-gray-200">/</span>
+      <a href="/lodges" class="transition hover:text-[#55142A]">Lodges</a>
+      <span class="text-gray-200">/</span>
+      <span class="text-gray-600"><%= l.name %></span>
     </div>
 
-    <div style="display:grid; grid-template-columns:1fr 360px; gap:40px; align-items:start;">
+    <div class="grid grid-cols-1 items-start gap-10 lg:grid-cols-[1fr_360px]">
 
-      <!-- LEFT COLUMN -->
+      <!-- LEFT -->
       <div>
 
         <!-- Gallery -->
-        <div style="margin-bottom:32px;">
-          <div style="margin-bottom:10px; border-radius:20px; overflow:hidden;">
+        <div class="mb-8">
+          <div class="mb-2.5 overflow-hidden rounded-[20px]">
             <img id="main-img" src="<%= l.images[0] %>" alt="<%= l.name %>" class="gallery-main fade-in" onclick="openLightbox(this.src)" />
           </div>
-          <div style="display:grid; grid-template-columns:repeat(<%= Math.min(l.images.length,4) %>,1fr); gap:10px;">
+          <div class="grid gap-2.5" style="grid-template-columns:repeat(<%= Math.min(l.images.length,4) %>,1fr);">
             <% l.images.slice(0,4).forEach(function(img, i) { %>
-            <div style="border-radius:12px; overflow:hidden;">
+            <div class="overflow-hidden rounded-xl">
               <img src="<%= img %>" alt="Lodge view <%= i+1 %>" class="gallery-thumb <%= i===0?'active':'' %>" onclick="switchImg(this,'<%= img %>')" loading="lazy" />
             </div>
             <% }); %>
           </div>
         </div>
 
-        <!-- Title + meta -->
-        <div style="margin-bottom:24px;">
-          <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:8px;">
+        <!-- Title -->
+        <div class="mb-6">
+          <div class="mb-2 flex flex-wrap items-start justify-between gap-3">
             <div>
-              <p style="font-size:11px; color:#A79A79; text-transform:uppercase; letter-spacing:0.12em; margin-bottom:6px;"><%= l.community %> · <%= l.location %></p>
-              <h1 style="font-family:'Cormorant Garamond',serif; font-size:clamp(24px,4vw,36px); font-weight:500; color:#111827; line-height:1.2;"><%= l.name %></h1>
+              <p class="mb-1.5 text-[11px] uppercase tracking-[0.12em] text-[#A79A79]"><%= l.community %> · <%= l.location %></p>
+              <h1 class="text-3xl font-medium leading-tight text-gray-900 md:text-4xl" style="font-family:'Cormorant Garamond',serif;"><%= l.name %></h1>
             </div>
-            <button onclick="saveLodge(<%= l.id %>)" id="save-btn" style="display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:999px;border:1px solid #e5e7eb;background:white;font-size:13px;color:#374151;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;flex-shrink:0;" onmouseover="this.style.borderColor='#55142A'" onmouseout="this.style.borderColor='#e5e7eb'">
-              <svg id="save-icon" style="width:15px;height:15px;" fill="none" stroke="#55142A" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/></svg>
+            <button onclick="saveLodge(<%= l.id %>)" class="flex shrink-0 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2 text-[13px] text-gray-600 transition hover:border-[#55142A]">
+              <svg class="h-4 w-4" fill="none" stroke="#55142A" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/></svg>
               Save
             </button>
           </div>
-          <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
-            <div style="display:flex;align-items:center;gap:5px;">
-              <svg style="width:14px;height:14px;fill:#f59e0b;flex-shrink:0;" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-              <span style="font-size:14px;font-weight:500;color:#111827;"><%= l.rating %></span>
-              <span style="font-size:13px;color:#9ca3af;">(<%= l.reviews_count %> reviews)</span>
+          <div class="flex flex-wrap items-center gap-4">
+            <div class="flex items-center gap-1.5">
+              <svg class="h-3.5 w-3.5 shrink-0 fill-amber-400" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <span class="text-sm font-medium text-gray-900"><%= l.rating %></span>
+              <span class="text-[13px] text-gray-400">(<%= l.reviews_count %> reviews)</span>
             </div>
-            <span style="font-size:13px;color:#9ca3af;">·</span>
-            <span style="font-size:13px;color:<%= l.available ? '#166534' : '#991b1b' %>; background:<%= l.available ? '#dcfce7' : '#fee2e2' %>; padding:3px 10px; border-radius:999px; font-weight:500;">
+            <span class="text-[13px] text-gray-300">·</span>
+            <span class="rounded-full px-2.5 py-0.5 text-[13px] font-medium" style="color:<%= l.available ? '#166534' : '#991b1b' %>; background:<%= l.available ? '#dcfce7' : '#fee2e2' %>;">
               <%= l.available ? (l.rooms_available + ' rooms available') : 'Fully booked' %>
             </span>
           </div>
         </div>
 
         <!-- Description -->
-        <div style="background:white;border:1px solid rgba(0,0,0,0.06);border-radius:18px;padding:24px;margin-bottom:24px;">
-          <h2 style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:#111827;margin-bottom:12px;">About this lodge</h2>
-          <p style="font-size:14px;color:#4b5563;line-height:1.8;"><%= l.description %></p>
+        <div class="mb-5 rounded-[18px] border border-black/[0.06] bg-white p-6">
+          <h2 class="mb-3 text-xl font-medium text-gray-900" style="font-family:'Cormorant Garamond',serif;">About this lodge</h2>
+          <p class="text-sm leading-[1.8] text-gray-600"><%= l.description %></p>
         </div>
 
         <!-- Amenities -->
-        <div style="background:white;border:1px solid rgba(0,0,0,0.06);border-radius:18px;padding:24px;margin-bottom:24px;">
-          <h2 style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:#111827;margin-bottom:16px;">Amenities</h2>
-          <div style="display:flex;flex-wrap:wrap;gap:10px;">
-            <% l.amenities.forEach(function(a) { %>
-            <span class="amenity"><%= a %></span>
-            <% }); %>
+        <div class="mb-5 rounded-[18px] border border-black/[0.06] bg-white p-6">
+          <h2 class="mb-4 text-xl font-medium text-gray-900" style="font-family:'Cormorant Garamond',serif;">Amenities</h2>
+          <div class="flex flex-wrap gap-2.5">
+            <% l.amenities.forEach(function(a) { %><span class="amenity"><%= a %></span><% }); %>
           </div>
         </div>
 
-        <!-- Pricing breakdown -->
-        <div style="background:white;border:1px solid rgba(0,0,0,0.06);border-radius:18px;padding:24px;margin-bottom:24px;">
-          <h2 style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:#111827;margin-bottom:16px;">Pricing</h2>
-          <div style="display:flex;flex-direction:column;gap:12px;">
-            <div style="display:flex;justify-content:space-between;font-size:14px;">
-              <span style="color:#6b7280;">Annual rent</span>
-              <span style="font-weight:500;color:#111827;">₦<%= l.price.toLocaleString() %></span>
-            </div>
-            <div style="display:flex;justify-content:space-between;font-size:14px;">
-              <span style="color:#6b7280;">Caution deposit (refundable)</span>
-              <span style="font-weight:500;color:#111827;">₦<%= l.caution.toLocaleString() %></span>
-            </div>
-            <div style="border-top:1px solid #f3f4f6;padding-top:12px;display:flex;justify-content:space-between;font-size:15px;">
-              <span style="color:#111827;font-weight:500;">Total to pay</span>
-              <span style="font-weight:600;color:#55142A;font-size:16px;">₦<%= (l.price + l.caution).toLocaleString() %></span>
-            </div>
+        <!-- Pricing -->
+        <div class="mb-5 rounded-[18px] border border-black/[0.06] bg-white p-6">
+          <h2 class="mb-4 text-xl font-medium text-gray-900" style="font-family:'Cormorant Garamond',serif;">Pricing</h2>
+          <div class="flex flex-col gap-3">
+            <div class="flex justify-between text-sm"><span class="text-gray-500">Annual rent</span><span class="font-medium text-gray-900">₦<%= l.price.toLocaleString() %></span></div>
+            <div class="flex justify-between text-sm"><span class="text-gray-500">Caution deposit (refundable)</span><span class="font-medium text-gray-900">₦<%= l.caution.toLocaleString() %></span></div>
+            <div class="flex justify-between border-t border-gray-100 pt-3 text-[15px]"><span class="font-medium text-gray-900">Total to pay</span><span class="text-base font-semibold text-[#55142A]">₦<%= (l.price + l.caution).toLocaleString() %></span></div>
           </div>
         </div>
 
         <!-- Landlord -->
-        <div style="background:white;border:1px solid rgba(0,0,0,0.06);border-radius:18px;padding:24px;margin-bottom:24px;">
-          <h2 style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:#111827;margin-bottom:16px;">Landlord</h2>
-          <div style="display:flex;align-items:center;gap:14px;">
-            <div style="width:48px;height:48px;border-radius:50%;background:rgba(85,20,42,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <svg style="width:22px;height:22px;color:#55142A;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0zM4.501 20.118a7.5 7.5 0 0 1 14.998 0"/></svg>
+        <div class="mb-5 rounded-[18px] border border-black/[0.06] bg-white p-6">
+          <h2 class="mb-4 text-xl font-medium text-gray-900" style="font-family:'Cormorant Garamond',serif;">Landlord</h2>
+          <div class="flex items-center gap-3.5">
+            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#55142A]/10">
+              <svg class="h-5 w-5 text-[#55142A]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0zM4.501 20.118a7.5 7.5 0 0 1 14.998 0"/></svg>
             </div>
             <div>
-              <p style="font-size:14px;font-weight:500;color:#111827;"><%= l.landlord.name %></p>
-              <p style="font-size:12px;color:#9ca3af;margin-top:2px;"><%= l.landlord.response_time %></p>
+              <p class="text-sm font-medium text-gray-900"><%= l.landlord.name %></p>
+              <p class="mt-0.5 text-xs text-gray-400"><%= l.landlord.response_time %></p>
             </div>
-            <a href="tel:<%= l.landlord.phone %>" style="margin-left:auto;display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:10px;background:#f8f6f3;color:#55142A;font-size:13px;font-weight:500;text-decoration:none;transition:background 0.15s;" onmouseover="this.style.background='#f1ebe9'" onmouseout="this.style.background='#f8f6f3'">
-              <svg style="width:14px;height:14px;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25z"/></svg>
+            <a href="tel:<%= l.landlord.phone %>" class="ml-auto flex items-center gap-1.5 rounded-xl bg-[#f8f6f3] px-4 py-2 text-[13px] font-medium text-[#55142A] transition hover:bg-[#f1ebe9]">
+              <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25z"/></svg>
               Call
             </a>
           </div>
         </div>
 
         <!-- Reviews -->
-        <div style="background:white;border:1px solid rgba(0,0,0,0.06);border-radius:18px;padding:24px;">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
-            <h2 style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:#111827;">Reviews</h2>
-            <div style="display:flex;align-items:center;gap:6px;">
-              <svg style="width:16px;height:16px;fill:#f59e0b;" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-              <span style="font-size:15px;font-weight:500;color:#111827;"><%= l.rating %></span>
-              <span style="font-size:13px;color:#9ca3af;">· <%= l.reviews_count %> reviews</span>
+        <div class="rounded-[18px] border border-black/[0.06] bg-white p-6">
+          <div class="mb-5 flex items-center justify-between">
+            <h2 class="text-xl font-medium text-gray-900" style="font-family:'Cormorant Garamond',serif;">Reviews</h2>
+            <div class="flex items-center gap-1.5">
+              <svg class="h-4 w-4 fill-amber-400" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <span class="text-[15px] font-medium text-gray-900"><%= l.rating %></span>
+              <span class="text-[13px] text-gray-400">· <%= l.reviews_count %> reviews</span>
             </div>
           </div>
-          <div style="display:flex;flex-direction:column;gap:14px;">
+          <div class="flex flex-col gap-3.5">
             <% l.reviews.forEach(function(r) { %>
-            <div class="review-card">
-              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-                <div style="display:flex;align-items:center;gap:10px;">
-                  <div style="width:34px;height:34px;border-radius:50%;background:rgba(85,20,42,0.08);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:#55142A;"><%= r.name.charAt(0) %></div>
+            <div class="rounded-2xl border border-black/[0.06] bg-white p-5">
+              <div class="mb-2.5 flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                  <div class="flex h-8 w-8 items-center justify-center rounded-full bg-[#55142A]/8 text-xs font-medium text-[#55142A]"><%= r.name.charAt(0) %></div>
                   <div>
-                    <p style="font-size:13px;font-weight:500;color:#111827;"><%= r.name %></p>
-                    <p style="font-size:11px;color:#9ca3af;"><%= r.date %></p>
+                    <p class="text-[13px] font-medium text-gray-900"><%= r.name %></p>
+                    <p class="text-[11px] text-gray-400"><%= r.date %></p>
                   </div>
                 </div>
-                <div style="display:flex;gap:2px;">
-                  <% for(var i=0;i<5;i++) { %><svg style="width:12px;height:12px;<%= i<r.rating?'fill:#f59e0b':'fill:#e5e7eb' %>;flex-shrink:0;" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><% } %>
+                <div class="flex gap-0.5">
+                  <% for(var i=0;i<5;i++) { %>
+                  <svg class="h-3 w-3 shrink-0" fill="<%= i<r.rating?'#f59e0b':'#e5e7eb' %>" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <% } %>
                 </div>
               </div>
-              <p style="font-size:13px;color:#4b5563;line-height:1.7;"><%= r.comment %></p>
+              <p class="text-[13px] leading-[1.7] text-gray-600"><%= r.comment %></p>
             </div>
             <% }); %>
           </div>
@@ -225,74 +184,59 @@
 
       </div>
 
-      <!-- RIGHT COLUMN — Booking card -->
+      <!-- RIGHT — Booking card -->
       <div>
-        <div class="book-card">
-          <div style="margin-bottom:20px;">
-            <p style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:500;color:#55142A;">₦<%= l.price.toLocaleString() %></p>
-            <p style="font-size:12px;color:#9ca3af;">per year · + ₦<%= l.caution.toLocaleString() %> caution</p>
+        <div class="book-card rounded-[20px] border border-black/[0.07] bg-white p-6 shadow-[0_4px_24px_rgba(0,0,0,0.06)]">
+          <div class="mb-5">
+            <p class="text-[28px] font-medium text-[#55142A]" style="font-family:'Cormorant Garamond',serif;">₦<%= l.price.toLocaleString() %></p>
+            <p class="text-xs text-gray-400">per year · + ₦<%= l.caution.toLocaleString() %> caution</p>
           </div>
 
           <% if (l.available) { %>
-          <form id="booking-form" style="display:flex;flex-direction:column;gap:14px;">
-
+          <form id="booking-form" class="flex flex-col gap-3.5">
             <div>
-              <label style="display:block;font-size:11px;font-weight:500;color:#374151;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Move-in date</label>
+              <label class="mb-1.5 block text-[11px] font-medium uppercase tracking-[0.08em] text-gray-600">Move-in date</label>
               <input type="date" name="move_in" class="field" required min="<%= new Date().toISOString().split('T')[0] %>" />
             </div>
-
             <div>
-              <label style="display:block;font-size:11px;font-weight:500;color:#374151;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Duration</label>
+              <label class="mb-1.5 block text-[11px] font-medium uppercase tracking-[0.08em] text-gray-600">Duration</label>
               <select name="duration" class="field">
                 <option value="1">1 year</option>
                 <option value="2">2 years</option>
                 <option value="3">3 years</option>
               </select>
             </div>
-
             <div>
-              <label style="display:block;font-size:11px;font-weight:500;color:#374151;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Special requests (optional)</label>
+              <label class="mb-1.5 block text-[11px] font-medium uppercase tracking-[0.08em] text-gray-600">Special requests (optional)</label>
               <textarea name="notes" class="field" rows="3" placeholder="Any special requirements..." style="resize:vertical;"></textarea>
             </div>
-
             <!-- Price summary -->
-            <div style="background:#f8f6f3;border-radius:12px;padding:14px;">
-              <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;">
-                <span style="color:#6b7280;">Rent (1 yr)</span>
-                <span id="rent-line" style="color:#111827;font-weight:500;">₦<%= l.price.toLocaleString() %></span>
-              </div>
-              <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:10px;">
-                <span style="color:#6b7280;">Caution deposit</span>
-                <span style="color:#111827;font-weight:500;">₦<%= l.caution.toLocaleString() %></span>
-              </div>
-              <div style="display:flex;justify-content:space-between;font-size:14px;border-top:1px solid #e5e7eb;padding-top:10px;">
-                <span style="color:#111827;font-weight:500;">Total</span>
-                <span id="total-line" style="color:#55142A;font-weight:600;">₦<%= (l.price + l.caution).toLocaleString() %></span>
-              </div>
+            <div class="rounded-xl bg-[#f8f6f3] p-3.5">
+              <div class="mb-1.5 flex justify-between text-[13px]"><span class="text-gray-500">Rent (1 yr)</span><span class="font-medium text-gray-900" id="rent-line">₦<%= l.price.toLocaleString() %></span></div>
+              <div class="mb-2.5 flex justify-between text-[13px]"><span class="text-gray-500">Caution deposit</span><span class="font-medium text-gray-900">₦<%= l.caution.toLocaleString() %></span></div>
+              <div class="flex justify-between border-t border-gray-200 pt-2.5 text-sm"><span class="font-medium text-gray-900">Total</span><span class="font-semibold text-[#55142A]" id="total-line">₦<%= (l.price + l.caution).toLocaleString() %></span></div>
             </div>
-
-            <button type="submit" class="book-btn" id="book-btn">
+            <button type="submit" id="book-btn" class="w-full rounded-xl bg-[#55142A] py-3.5 text-sm font-medium text-white transition hover:bg-[#6e1a35] active:scale-[0.99] disabled:cursor-not-allowed disabled:bg-[#b08090]">
               <span id="book-text">Request booking</span>
-              <span id="book-loading" style="display:none;">Processing...</span>
+              <span id="book-loading" class="hidden">Processing...</span>
             </button>
-
           </form>
           <% } else { %>
-          <div style="text-align:center;padding:20px 0;">
-            <p style="font-size:14px;color:#6b7280;margin-bottom:16px;">This lodge is currently fully booked.</p>
-            <button onclick="notifyMe(<%= l.id %>)" style="width:100%;background:#f8f6f3;color:#55142A;border:1px solid rgba(85,20,42,0.2);border-radius:12px;padding:12px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;">Notify me when available</button>
+          <div class="py-5 text-center">
+            <p class="mb-4 text-sm text-gray-500">This lodge is currently fully booked.</p>
+            <button onclick="notifyMe(<%= l.id %>)" class="w-full rounded-xl border border-[#55142A]/20 bg-[#f8f6f3] py-3 text-[13px] font-medium text-[#55142A] transition hover:bg-[#f1ebe9]">Notify me when available</button>
           </div>
           <% } %>
 
           <!-- Trust signals -->
-          <div style="margin-top:20px;padding-top:16px;border-top:1px solid #f3f4f6;">
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
-              <svg style="width:14px;height:14px;color:#166534;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
-              <p style="font-size:12px;color:#6b7280;">Verified listing</p>
+          <div class="mt-5 space-y-2 border-t border-gray-100 pt-5">
+            <div class="flex items-center gap-2">
+              <svg class="h-3.5 w-3.5 text-green-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
+              <p class="text-xs text-gray-500">Verified listing</p>
             </div>
-            <div style="display:flex;align-items:center;gap:8px;">
-              <svg style="width:14px;height:14px;color:#166534;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25z"/></svg>
-              <p style="font-size:12px;color:#6b7280;">Secure booking process</p>
+            <div class="flex items-center gap-2">
+              <svg class="h-3.5 w-3.5 text-green-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25z"/></svg>
+              <p class="text-xs text-gray-500">Secure booking process</p>
             </div>
           </div>
         </div>
@@ -303,7 +247,7 @@
 
   <!-- Lightbox -->
   <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-    <button onclick="closeLightbox()" style="position:absolute;top:20px;right:20px;background:rgba(255,255,255,0.1);border:none;color:white;width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;">✕</button>
+    <button onclick="closeLightbox()" class="absolute right-5 top-5 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-lg text-white">✕</button>
     <img id="lightbox-img" src="" alt="Lodge view" />
   </div>
 
@@ -316,96 +260,40 @@
     const LODGE_CAUTION = <%= l.caution %>;
     const LODGE_ID      = <%= l.id %>;
 
-    // Gallery
     function switchImg(thumb, src) {
       document.getElementById('main-img').src = src;
       document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
       thumb.classList.add('active');
     }
-
-    // Lightbox
-    function openLightbox(src) {
-      document.getElementById('lightbox-img').src = src;
-      document.getElementById('lightbox').classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
-    function closeLightbox() {
-      document.getElementById('lightbox').classList.remove('open');
-      document.body.style.overflow = '';
-    }
+    function openLightbox(src) { document.getElementById('lightbox-img').src = src; document.getElementById('lightbox').classList.add('open'); document.body.style.overflow = 'hidden'; }
+    function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow = ''; }
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
-    // Duration → update total
     document.querySelector('[name="duration"]')?.addEventListener('change', function () {
-      const yrs   = Number(this.value);
-      const rent  = LODGE_PRICE * yrs;
-      const total = rent + LODGE_CAUTION;
+      const yrs = Number(this.value), rent = LODGE_PRICE * yrs, total = rent + LODGE_CAUTION;
       document.getElementById('rent-line').textContent  = '₦' + rent.toLocaleString('en-NG');
       document.getElementById('total-line').textContent = '₦' + total.toLocaleString('en-NG');
     });
 
-    // Booking form
     document.getElementById('booking-form')?.addEventListener('submit', async function (e) {
       e.preventDefault();
-      const btn  = document.getElementById('book-btn');
-      const text = document.getElementById('book-text');
-      const load = document.getElementById('book-loading');
-      btn.disabled = true; text.style.display = 'none'; load.style.display = 'inline';
-
-      const data = {
-        lodge_id: LODGE_ID,
-        move_in:  this.move_in.value,
-        duration: this.duration.value,
-        notes:    this.notes.value,
-      };
-
+      const btn = document.getElementById('book-btn'), text = document.getElementById('book-text'), load = document.getElementById('book-loading');
+      btn.disabled = true; text.classList.add('hidden'); load.classList.remove('hidden');
       try {
-        const res = await fetch('/bookings/request', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'same-origin',
-          body: JSON.stringify(data),
-        });
-        if (res.ok) {
-          showToast('Booking request sent!', 'success');
-          setTimeout(() => window.location.href = '/bookings', 1500);
-        } else if (res.status === 401) {
-          window.location.href = '/sign-in?redirect=/select-lodge/' + LODGE_ID;
-        } else {
-          const d = await res.json().catch(() => ({}));
-          showToast(d.message || 'Failed to submit. Please try again.', 'error');
-          btn.disabled = false; text.style.display = 'inline'; load.style.display = 'none';
-        }
-      } catch {
-        showToast('Something went wrong.', 'error');
-        btn.disabled = false; text.style.display = 'inline'; load.style.display = 'none';
-      }
+        const res = await fetch('/bookings/request', { method:'POST', headers:{'Content-Type':'application/json'}, credentials:'same-origin', body:JSON.stringify({ lodge_id:LODGE_ID, move_in:this.move_in.value, duration:this.duration.value, notes:this.notes.value }) });
+        if (res.ok) { showToast('Booking request sent!', 'success'); setTimeout(() => window.location.href = '/bookings', 1500); }
+        else if (res.status === 401) window.location.href = '/sign-in?redirect=/select-lodge/' + LODGE_ID;
+        else { const d = await res.json().catch(()=>{}); showToast(d?.message || 'Failed to submit. Please try again.', 'error'); btn.disabled = false; text.classList.remove('hidden'); load.classList.add('hidden'); }
+      } catch { showToast('Something went wrong.', 'error'); btn.disabled = false; text.classList.remove('hidden'); load.classList.add('hidden'); }
     });
 
-    // Save lodge
     function saveLodge(id) {
-      fetch('/saved/toggle', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'same-origin',
-        body: JSON.stringify({ lodge_id: id }),
-      }).then(r => {
-        if (r.ok) showToast('Saved to your wishlist!', 'success');
-        else if (r.status === 401) window.location.href = '/sign-in';
-      }).catch(() => showToast('Could not save. Try again.', 'error'));
+      fetch('/saved/toggle', { method:'POST', headers:{'Content-Type':'application/json'}, credentials:'same-origin', body:JSON.stringify({ lodge_id:id }) })
+        .then(r => { if (r.ok) showToast('Saved to your wishlist!', 'success'); else if (r.status === 401) window.location.href = '/sign-in'; })
+        .catch(() => showToast('Could not save. Try again.', 'error'));
     }
-
-    // Notify me
-    function notifyMe(id) {
-      showToast('We will notify you when this lodge is available.', 'success');
-    }
-
-    function showToast(msg, type) {
-      const t = document.getElementById('toast');
-      t.textContent = msg;
-      t.className = 'toast show' + (type ? ' ' + type : '');
-      setTimeout(() => { t.className = 'toast'; }, 3500);
-    }
+    function notifyMe() { showToast('We will notify you when this lodge is available.', 'success'); }
+    function showToast(msg, type) { const t = document.getElementById('toast'); t.textContent = msg; t.className = 'toast show' + (type ? ' ' + type : ''); setTimeout(() => { t.className = 'toast'; }, 3500); }
   </script>
   <script src="/js/navbar.js"></script>
 </body>

@@ -11,84 +11,54 @@
   <link rel="stylesheet" href="/src/navbar.css" />
   <style>
     body { font-family: 'DM Sans', sans-serif; background: #f8f6f3; }
-
-    @keyframes slideUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
-    .lodge-card {
-      background: white; border: 1px solid rgba(0,0,0,0.06); border-radius: 18px;
-      overflow: hidden; opacity: 0; animation: slideUp 0.4s cubic-bezier(0.22,1,0.36,1) forwards;
-      transition: transform 0.22s ease, box-shadow 0.22s ease;
-      text-decoration: none; color: inherit; display: block;
-    }
-    .lodge-card:hover { transform: translateY(-4px); box-shadow: 0 10px 32px rgba(85,20,42,0.09); }
-    .lodge-card .img-wrap { overflow: hidden; }
-    .lodge-card img { width: 100%; height: 200px; object-fit: cover; display: block; transition: transform 0.45s ease; }
-    .lodge-card:hover img { transform: scale(1.05); }
-
-    .save-btn {
-      position: absolute; top: 10px; right: 10px; z-index: 5;
-      width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,0.92);
-      border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.12); backdrop-filter: blur(4px);
-      transition: transform 0.2s;
-    }
-    .save-btn:hover { transform: scale(1.1); }
-    .save-btn.saved svg { fill: #55142A; stroke: #55142A; }
-
-    .filter-btn {
-      padding: 7px 18px; border-radius: 999px; font-size: 13px;
-      border: 1px solid #e5e7eb; background: white; color: #6b7280;
-      cursor: pointer; font-family: 'DM Sans', sans-serif;
-      transition: background 0.15s, color 0.15s, border-color 0.15s;
-      white-space: nowrap;
-    }
-    .filter-btn:hover { background: #f9fafb; }
-    .filter-btn.active { background: #55142A; color: white; border-color: #55142A; }
-
-    .page-btn {
-      padding: 8px 20px; border-radius: 10px; border: 1px solid #e5e7eb;
-      background: white; font-size: 13px; color: #374151; cursor: pointer;
-      font-family: 'DM Sans', sans-serif; transition: background 0.15s;
-    }
-    .page-btn:hover:not(:disabled) { background: #f9fafb; }
-    .page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-    .page-btn.active { background: #55142A; color: white; border-color: #55142A; }
-
-    .rating { display: flex; align-items: center; gap: 3px; }
-    .price-tag { font-size: 15px; font-weight: 600; color: #55142A; }
-
-    .avail-badge { font-size: 11px; font-weight: 500; padding: 2px 9px; border-radius: 999px; }
-    .avail-yes { background: #dcfce7; color: #166534; }
-    .avail-no  { background: #fee2e2; color: #991b1b; }
+    @keyframes slideUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+    .lodge-card { opacity:0; animation:slideUp 0.4s cubic-bezier(0.22,1,0.36,1) forwards; transition:transform 0.22s ease,box-shadow 0.22s ease; }
+    .lodge-card:hover { transform:translateY(-4px); box-shadow:0 10px 32px rgba(85,20,42,0.09); }
+    .lodge-card .img-wrap { overflow:hidden; }
+    .lodge-card img { transition:transform 0.45s ease; }
+    .lodge-card:hover img { transform:scale(1.05); }
+    .save-btn { position:absolute; top:10px; right:10px; z-index:5; width:34px; height:34px; border-radius:50%; background:rgba(255,255,255,0.92); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,0.12); backdrop-filter:blur(4px); transition:transform 0.2s; }
+    .save-btn:hover { transform:scale(1.1); }
+    .save-btn.saved svg { fill:#55142A; stroke:#55142A; }
+    .filter-btn { padding:7px 18px; border-radius:999px; font-size:13px; border:1px solid #e5e7eb; background:white; color:#6b7280; cursor:pointer; font-family:'DM Sans',sans-serif; transition:background 0.15s,color 0.15s,border-color 0.15s; white-space:nowrap; }
+    .filter-btn:hover { background:#f9fafb; }
+    .filter-btn.active { background:#55142A; color:white; border-color:#55142A; }
+    .page-btn { padding:8px 20px; border-radius:10px; border:1px solid #e5e7eb; background:white; font-size:13px; color:#374151; cursor:pointer; font-family:'DM Sans',sans-serif; transition:background 0.15s; }
+    .page-btn:hover:not(:disabled) { background:#f9fafb; }
+    .page-btn:disabled { opacity:0.4; cursor:not-allowed; }
+    .page-btn.active { background:#55142A; color:white; border-color:#55142A; }
+    .avail-yes { background:#dcfce7; color:#166534; }
+    .avail-no  { background:#fee2e2; color:#991b1b; }
   </style>
 </head>
-
 <body class="min-h-screen pt-16">
 
   <%- include('partials/header.ejs') %>
 
   <!-- Hero -->
-  <div style="background:#55142A;padding:44px 24px 60px;">
-    <div style="max-width:1200px;margin:0 auto;">
-      <p style="font-size:11px;color:#A79A79;text-transform:uppercase;letter-spacing:0.15em;margin-bottom:8px;" id="community-label">All communities</p>
-      <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(28px,5vw,44px);font-weight:500;color:white;" id="community-title">Browse Lodges</h1>
-      <p style="font-size:13px;color:rgba(255,255,255,0.5);margin-top:6px;">Discover available lodges curated for your stay</p>
+  <div class="bg-[#55142A] px-6 pb-15 pt-11 md:px-12">
+    <div class="mx-auto max-w-7xl">
+      <p class="mb-2 text-[11px] uppercase tracking-[0.15em] text-[#A79A79]" id="community-label">All communities</p>
+      <h1 class="text-4xl font-medium text-white md:text-5xl" style="font-family:'Cormorant Garamond',serif;" id="community-title">Browse Lodges</h1>
+      <p class="mt-2 text-[13px] text-white/50">Discover available lodges curated for your stay</p>
     </div>
   </div>
 
-  <main style="max-width:1200px;margin:0 auto;padding:0 20px 80px;">
+  <main class="mx-auto max-w-7xl px-5 pb-20">
 
     <!-- Filters + search -->
-    <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-top:32px;margin-bottom:28px;">
-      <div style="display:flex;gap:8px;flex-wrap:wrap;" id="filter-wrap">
+    <div class="mb-7 mt-8 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex flex-wrap gap-2" id="filter-wrap">
         <button class="filter-btn active" data-filter="all">All</button>
         <button class="filter-btn" data-filter="umuchima">Umuchima</button>
         <button class="filter-btn" data-filter="eziobodo">Eziobodo</button>
         <button class="filter-btn" data-filter="ihiagwa">Ihiagwa</button>
         <button class="filter-btn" data-filter="available">Available</button>
       </div>
-      <div style="display:flex;gap:10px;align-items:center;">
-        <input type="search" id="lodge-search" placeholder="Search lodges..." style="border:1px solid #e5e7eb;border-radius:10px;padding:8px 14px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;min-width:200px;" onfocus="this.style.borderColor='#55142A'" onblur="this.style.borderColor='#e5e7eb'" />
-        <select id="sort-select" style="border:1px solid #e5e7eb;border-radius:10px;padding:8px 12px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;background:white;color:#374151;" onchange="sortChanged(this)">
+      <div class="flex items-center gap-2.5">
+        <input type="search" id="lodge-search" placeholder="Search lodges..."
+          class="min-w-[180px] rounded-xl border border-gray-200 bg-white px-3.5 py-2 text-[13px] text-gray-900 outline-none transition focus:border-[#55142A] focus:ring-[3px] focus:ring-[#55142A]/8" />
+        <select id="sort-select" class="rounded-xl border border-gray-200 bg-white px-3 py-2 text-[13px] text-gray-700 outline-none focus:border-[#55142A]" onchange="sortChanged(this)">
           <option value="default">Sort by</option>
           <option value="price-asc">Price: low to high</option>
           <option value="price-desc">Price: high to low</option>
@@ -97,23 +67,22 @@
       </div>
     </div>
 
-    <!-- Results count -->
-    <p style="font-size:13px;color:#9ca3af;margin-bottom:20px;" id="results-count"></p>
+    <p class="mb-5 text-[13px] text-gray-400" id="results-count"></p>
 
     <!-- Grid -->
-    <div id="lodges-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px;"></div>
+    <div id="lodges-grid" class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"></div>
 
     <!-- Empty -->
-    <div id="empty" style="display:none;text-align:center;padding:80px 24px;">
-      <div style="width:56px;height:56px;background:rgba(85,20,42,0.07);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
-        <svg style="width:24px;height:24px;color:#55142A;opacity:0.4;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21"/></svg>
+    <div id="empty" class="hidden py-20 text-center">
+      <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#55142A]/[0.07]">
+        <svg class="h-6 w-6 text-[#55142A]/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21"/></svg>
       </div>
-      <p style="font-family:'Cormorant Garamond',serif;font-size:20px;color:#374151;margin-bottom:6px;">No lodges found</p>
-      <p style="font-size:13px;color:#9ca3af;">Try a different search or filter</p>
+      <p class="text-xl text-gray-700" style="font-family:'Cormorant Garamond',serif;">No lodges found</p>
+      <p class="mt-1 text-[13px] text-gray-400">Try a different search or filter</p>
     </div>
 
     <!-- Pagination -->
-    <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:48px;flex-wrap:wrap;" id="pagination"></div>
+    <div class="mt-12 flex flex-wrap items-center justify-center gap-2" id="pagination"></div>
 
   </main>
 
@@ -121,38 +90,31 @@
 
   <script>
     const ALL_LODGES = <%- JSON.stringify(typeof lodges !== 'undefined' ? lodges : [
-      { id:1,  name:'Sunrise Lodge',    community:'umuchima', price:120000, rating:4.8, available:true,  image:'/images/lodge1.jpg' },
-      { id:2,  name:'Prime Lodge',      community:'umuchima', price:150000, rating:4.6, available:true,  image:'/images/lodge2.jpg' },
-      { id:3,  name:'Elite Stay',       community:'umuchima', price:180000, rating:4.9, available:false, image:'/images/lodge3.jpg' },
-      { id:4,  name:'Budget Lodge',     community:'umuchima', price:90000,  rating:4.3, available:true,  image:'/images/lodge4.jpg' },
-      { id:5,  name:'Royal Lodge',      community:'eziobodo', price:130000, rating:4.7, available:true,  image:'/images/lodge5.jpg' },
-      { id:6,  name:'Green View',       community:'eziobodo', price:110000, rating:4.4, available:true,  image:'/images/lodge6.jpg' },
-      { id:7,  name:'Cedar Hostel',     community:'eziobodo', price:95000,  rating:4.2, available:false, image:'/images/lodge7.jpg' },
-      { id:8,  name:'The Retreat',      community:'eziobodo', price:160000, rating:4.8, available:true,  image:'/images/lodge8.jpg' },
-      { id:9,  name:'Palm Court',       community:'ihiagwa',  price:105000, rating:4.5, available:true,  image:'/images/lodge9.jpg' },
-      { id:10, name:'Haven Lodge',      community:'ihiagwa',  price:140000, rating:4.7, available:true,  image:'/images/lodge10.jpg' },
-      { id:11, name:'Campus View',      community:'ihiagwa',  price:85000,  rating:4.1, available:false, image:'/images/lodge11.jpg' },
-      { id:12, name:'Silver Hostel',    community:'ihiagwa',  price:125000, rating:4.6, available:true,  image:'/images/lodge12.jpg' },
+      { id:1,  name:'Sunrise Lodge',  community:'umuchima', price:120000, rating:4.8, available:true,  image:'/images/lodge1.jpg' },
+      { id:2,  name:'Prime Lodge',    community:'umuchima', price:150000, rating:4.6, available:true,  image:'/images/lodge2.jpg' },
+      { id:3,  name:'Elite Stay',     community:'umuchima', price:180000, rating:4.9, available:false, image:'/images/lodge3.jpg' },
+      { id:4,  name:'Budget Lodge',   community:'umuchima', price:90000,  rating:4.3, available:true,  image:'/images/lodge4.jpg' },
+      { id:5,  name:'Royal Lodge',    community:'eziobodo', price:130000, rating:4.7, available:true,  image:'/images/lodge5.jpg' },
+      { id:6,  name:'Green View',     community:'eziobodo', price:110000, rating:4.4, available:true,  image:'/images/lodge6.jpg' },
+      { id:7,  name:'Cedar Hostel',   community:'eziobodo', price:95000,  rating:4.2, available:false, image:'/images/lodge7.jpg' },
+      { id:8,  name:'The Retreat',    community:'eziobodo', price:160000, rating:4.8, available:true,  image:'/images/lodge8.jpg' },
+      { id:9,  name:'Palm Court',     community:'ihiagwa',  price:105000, rating:4.5, available:true,  image:'/images/lodge9.jpg' },
+      { id:10, name:'Haven Lodge',    community:'ihiagwa',  price:140000, rating:4.7, available:true,  image:'/images/lodge10.jpg' },
+      { id:11, name:'Campus View',    community:'ihiagwa',  price:85000,  rating:4.1, available:false, image:'/images/lodge11.jpg' },
+      { id:12, name:'Silver Hostel',  community:'ihiagwa',  price:125000, rating:4.6, available:true,  image:'/images/lodge12.jpg' },
     ]) %>;
 
     const PER_PAGE = 9;
-    let currentPage = 1;
-    let activeFilter = 'all';
-    let searchQuery  = '';
-    let sortMode     = 'default';
-    const savedIds   = new Set(JSON.parse(localStorage.getItem('uponthee_saved') || '[]'));
+    let currentPage = 1, activeFilter = 'all', searchQuery = '', sortMode = 'default';
+    const savedIds = new Set(JSON.parse(localStorage.getItem('uponthee_saved') || '[]'));
 
     function fmt(n) { return '₦' + Number(n).toLocaleString('en-NG'); }
-    function stars(r) { return Math.round(r); }
 
     function getFiltered() {
       let data = [...ALL_LODGES];
       if (activeFilter === 'available') data = data.filter(l => l.available);
       else if (activeFilter !== 'all')  data = data.filter(l => l.community === activeFilter);
-      if (searchQuery) {
-        const q = searchQuery.toLowerCase();
-        data = data.filter(l => l.name.toLowerCase().includes(q) || l.community.toLowerCase().includes(q));
-      }
+      if (searchQuery) { const q = searchQuery.toLowerCase(); data = data.filter(l => l.name.toLowerCase().includes(q) || l.community.toLowerCase().includes(q)); }
       if (sortMode === 'price-asc')  data.sort((a,b) => a.price - b.price);
       if (sortMode === 'price-desc') data.sort((a,b) => b.price - a.price);
       if (sortMode === 'rating')     data.sort((a,b) => b.rating - a.rating);
@@ -160,109 +122,76 @@
     }
 
     function render() {
-      const data     = getFiltered();
-      const total    = data.length;
-      const pages    = Math.ceil(total / PER_PAGE);
-      currentPage    = Math.min(currentPage, pages || 1);
-      const slice    = data.slice((currentPage-1)*PER_PAGE, currentPage*PER_PAGE);
-      const gridEl   = document.getElementById('lodges-grid');
-      const emptyEl  = document.getElementById('empty');
-      const countEl  = document.getElementById('results-count');
+      const data = getFiltered(), total = data.length;
+      const pages = Math.ceil(total / PER_PAGE);
+      currentPage = Math.min(currentPage, pages || 1);
+      const slice = data.slice((currentPage-1)*PER_PAGE, currentPage*PER_PAGE);
+      const gridEl = document.getElementById('lodges-grid'), emptyEl = document.getElementById('empty');
+      document.getElementById('results-count').textContent = total + ' lodge' + (total !== 1 ? 's' : '') + ' found';
 
-      countEl.textContent = total + ' lodge' + (total !== 1 ? 's' : '') + ' found';
+      if (!slice.length) { gridEl.innerHTML = ''; emptyEl.classList.remove('hidden'); document.getElementById('pagination').innerHTML = ''; return; }
+      emptyEl.classList.add('hidden');
 
-      if (!slice.length) {
-        gridEl.innerHTML = '';
-        emptyEl.style.display = 'block';
-        document.getElementById('pagination').innerHTML = '';
-        return;
-      }
-
-      emptyEl.style.display = 'none';
       gridEl.innerHTML = slice.map((l, i) => `
-        <a href="/select-lodge/${l.id}" class="lodge-card" style="animation-delay:${i*60}ms;position:relative;">
+        <a href="/select-lodge/${l.id}" class="lodge-card relative block overflow-hidden rounded-[18px] border border-black/[0.06] bg-white text-inherit no-underline" style="animation-delay:${i*60}ms;">
           <button class="save-btn ${savedIds.has(l.id)?'saved':''}" data-id="${l.id}" onclick="event.preventDefault();toggleSave(this,${l.id})" aria-label="Save">
             <svg style="width:15px;height:15px;" fill="none" stroke="#55142A" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/></svg>
           </button>
           <div class="img-wrap">
-            <img src="${l.image}" alt="${l.name}" loading="lazy" />
+            <img src="${l.image}" alt="${l.name}" class="h-[200px] w-full object-cover" loading="lazy" />
           </div>
-          <div style="padding:14px 16px 16px;">
-            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;">
-              <h3 style="font-size:14px;font-weight:500;color:#111827;line-height:1.3;">${l.name}</h3>
-              <span class="avail-badge ${l.available?'avail-yes':'avail-no'}">${l.available?'Available':'Full'}</span>
+          <div class="p-4">
+            <div class="mb-1 flex items-start justify-between gap-2">
+              <h3 class="text-sm font-medium leading-snug text-gray-900">${l.name}</h3>
+              <span class="${l.available?'avail-yes':'avail-no'} shrink-0 rounded-full px-2.5 py-0.5 text-[11px] font-medium">${l.available?'Available':'Full'}</span>
             </div>
-            <p style="font-size:12px;color:#9ca3af;margin-bottom:8px;text-transform:capitalize;">${l.community}</p>
-            <div style="display:flex;align-items:center;justify-content:space-between;">
-              <span class="price-tag">${fmt(l.price)}<span style="font-size:11px;font-weight:400;color:#9ca3af;"> /yr</span></span>
-              <div class="rating">
-                <svg style="width:12px;height:12px;fill:#f59e0b;" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                <span style="font-size:12px;color:#374151;margin-left:2px;">${l.rating}</span>
+            <p class="mb-2 text-xs capitalize text-gray-400">${l.community}</p>
+            <div class="flex items-center justify-between">
+              <span class="text-[15px] font-semibold text-[#55142A]">${fmt(l.price)}<span class="text-[11px] font-normal text-gray-400"> /yr</span></span>
+              <div class="flex items-center gap-1">
+                <svg class="h-3 w-3 fill-amber-400" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <span class="text-xs text-gray-700">${l.rating}</span>
               </div>
             </div>
           </div>
-        </a>
-      `).join('');
+        </a>`).join('');
 
-      // Pagination
       const pagEl = document.getElementById('pagination');
       if (pages <= 1) { pagEl.innerHTML = ''; return; }
       let html = `<button class="page-btn" onclick="goPage(${currentPage-1})" ${currentPage===1?'disabled':''}>← Prev</button>`;
-      for (let p=1;p<=pages;p++) {
-        html += `<button class="page-btn ${p===currentPage?'active':''}" onclick="goPage(${p})">${p}</button>`;
-      }
+      for (let p=1;p<=pages;p++) html += `<button class="page-btn ${p===currentPage?'active':''}" onclick="goPage(${p})">${p}</button>`;
       html += `<button class="page-btn" onclick="goPage(${currentPage+1})" ${currentPage===pages?'disabled':''}>Next →</button>`;
       pagEl.innerHTML = html;
     }
 
-    function goPage(p) {
-      currentPage = p;
-      render();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    function goPage(p) { currentPage = p; render(); window.scrollTo({ top:0, behavior:'smooth' }); }
 
     function toggleSave(btn, id) {
-      if (savedIds.has(id)) { savedIds.delete(id); btn.classList.remove('saved'); }
-      else { savedIds.add(id); btn.classList.add('saved'); }
+      savedIds.has(id) ? (savedIds.delete(id), btn.classList.remove('saved')) : (savedIds.add(id), btn.classList.add('saved'));
       localStorage.setItem('uponthee_saved', JSON.stringify([...savedIds]));
-      fetch('/saved/toggle', {
-        method:'POST', headers:{'Content-Type':'application/json'}, credentials:'same-origin',
-        body: JSON.stringify({ lodge_id: id }),
-      }).catch(() => {});
+      fetch('/saved/toggle', { method:'POST', headers:{'Content-Type':'application/json'}, credentials:'same-origin', body:JSON.stringify({ lodge_id:id }) }).catch(()=>{});
     }
 
     function sortChanged(el) { sortMode = el.value; currentPage = 1; render(); }
 
-    // Filter pills
     document.querySelectorAll('.filter-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        activeFilter = btn.dataset.filter;
-        currentPage = 1;
-        render();
+        btn.classList.add('active'); activeFilter = btn.dataset.filter; currentPage = 1; render();
       });
     });
 
-    // Search
     let searchTimer;
     document.getElementById('lodge-search').addEventListener('input', function () {
       clearTimeout(searchTimer);
-      searchTimer = setTimeout(() => {
-        searchQuery = this.value.trim();
-        currentPage = 1;
-        render();
-      }, 280);
+      searchTimer = setTimeout(() => { searchQuery = this.value.trim(); currentPage = 1; render(); }, 280);
     });
 
-    // Read community from URL param
     const params = new URLSearchParams(window.location.search);
     const communityParam = params.get('community');
     if (communityParam) {
       activeFilter = communityParam;
-      document.querySelectorAll('.filter-btn').forEach(b => {
-        b.classList.toggle('active', b.dataset.filter === communityParam);
-      });
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.filter === communityParam));
       document.getElementById('community-title').textContent = communityParam.charAt(0).toUpperCase() + communityParam.slice(1) + ' Lodges';
       document.getElementById('community-label').textContent = 'Community';
     }

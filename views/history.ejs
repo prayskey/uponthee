@@ -1,412 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Transaction History — Uponthee</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap"
-      rel="stylesheet"
-    />
-    <link href="/src/output.css" rel="stylesheet" />
-    <link rel="stylesheet" href="/src/navbar.css" />
-    <style>
-      body {
-        font-family: "DM Sans", sans-serif;
-        background: #f8f6f3;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Transaction History — Uponthee</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <link href="/src/output.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/src/navbar.css" />
+  <style>
+    body { font-family: 'DM Sans', sans-serif; background: #f8f6f3; }
+    @keyframes slideUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+    .tx-row { opacity:0; animation:slideUp 0.4s cubic-bezier(0.22,1,0.36,1) forwards; }
+    .tx-icon-payment { background:rgba(34,197,94,0.1); }
+    .tx-icon-refund  { background:rgba(59,130,246,0.1); }
+    .tx-icon-pending { background:rgba(234,179,8,0.1); }
+    .tx-icon-failed  { background:rgba(239,68,68,0.1); }
+    .badge-success { background:#dcfce7; color:#166534; }
+    .badge-refund  { background:#dbeafe; color:#1e40af; }
+    .badge-pending { background:#fef9c3; color:#854d0e; }
+    .badge-failed  { background:#fee2e2; color:#991b1b; }
+    .filter-btn.active { background:#55142A; color:white; border-color:#55142A; }
+  </style>
+</head>
+<body class="min-h-screen pt-16">
 
-      @keyframes slideUp {
-        from {
-          opacity: 0;
-          transform: translateY(16px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-      .tx-row {
-        background: white;
-        border: 1px solid rgba(0, 0, 0, 0.06);
-        border-radius: 16px;
-        padding: 16px 20px;
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        opacity: 0;
-        animation: slideUp 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-        transition: box-shadow 0.2s;
-      }
-      .tx-row:hover {
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
-      }
+  <%- include('partials/header.ejs') %>
 
-      .tx-icon {
-        width: 44px;
-        height: 44px;
-        border-radius: 12px;
-        flex-shrink: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      .tx-icon.payment {
-        background: rgba(34, 197, 94, 0.1);
-      }
-      .tx-icon.refund {
-        background: rgba(59, 130, 246, 0.1);
-      }
-      .tx-icon.pending {
-        background: rgba(234, 179, 8, 0.1);
-      }
-      .tx-icon.failed {
-        background: rgba(239, 68, 68, 0.1);
-      }
+  <!-- Hero -->
+  <div class="bg-[#55142A] px-6 pb-16 pt-12 md:px-12">
+    <div class="mx-auto max-w-6xl">
+      <p class="mb-2 text-sm tracking-[0.05em] text-[#A79A79]" style="font-family:'Cormorant Garamond',serif;">Payment records</p>
+      <h1 class="text-4xl font-medium text-white md:text-5xl" style="font-family:'Cormorant Garamond',serif;">Transaction history</h1>
+      <p class="mt-2 text-sm text-white/50">All your payments, refunds and lodge bookings</p>
+    </div>
+  </div>
 
-      .badge {
-        font-size: 11px;
-        font-weight: 500;
-        padding: 3px 10px;
-        border-radius: 999px;
-        white-space: nowrap;
-      }
-      .badge-success {
-        background: #dcfce7;
-        color: #166534;
-      }
-      .badge-refund {
-        background: #dbeafe;
-        color: #1e40af;
-      }
-      .badge-pending {
-        background: #fef9c3;
-        color: #854d0e;
-      }
-      .badge-failed {
-        background: #fee2e2;
-        color: #991b1b;
-      }
+  <main class="mx-auto max-w-6xl px-6 pb-20 md:px-12">
 
-      .filter-btn {
-        padding: 6px 16px;
-        border-radius: 999px;
-        font-size: 13px;
-        border: 1px solid #e5e7eb;
-        background: white;
-        color: #6b7280;
-        cursor: pointer;
-        font-family: "DM Sans", sans-serif;
-        transition:
-          background 0.15s,
-          color 0.15s,
-          border-color 0.15s;
-      }
-      .filter-btn:hover {
-        background: #f9fafb;
-      }
-      .filter-btn.active {
-        background: #55142a;
-        color: white;
-        border-color: #55142a;
-      }
-    </style>
-  </head>
-
-  <body class="min-h-screen pt-16">
-    <%- include('partials/header.ejs') %>
-
-    <!-- Hero -->
-    <div style="background: #55142a; padding: 48px 24px 64px">
-      <div style="max-width: 1100px; margin: 0 auto">
-        <p
-          style="
-            font-size: 13px;
-            color: #a79a79;
-            margin-bottom: 8px;
-            font-family: &quot;Cormorant Garamond&quot;, serif;
-            letter-spacing: 0.05em;
-          "
-        >
-          Payment records
-        </p>
-        <h1
-          style="
-            font-family: &quot;Cormorant Garamond&quot;, serif;
-            font-size: clamp(28px, 4vw, 42px);
-            font-weight: 500;
-            color: white;
-          "
-        >
-          Transaction history
-        </h1>
-        <p
-          style="
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.5);
-            margin-top: 6px;
-          "
-        >
-          All your payments, refunds and lodge bookings
-        </p>
+    <!-- Summary cards -->
+    <div class="mb-10 -mt-7 grid grid-cols-2 gap-3.5 md:grid-cols-4">
+      <div class="rounded-2xl border border-black/[0.06] bg-white px-6 py-5">
+        <p class="mb-2 text-[11px] uppercase tracking-[0.1em] text-gray-400">Total spent</p>
+        <p class="text-[28px] font-medium text-gray-900" style="font-family:'Cormorant Garamond',serif;" id="spent">₦0</p>
+      </div>
+      <div class="rounded-2xl border border-black/[0.06] bg-white px-6 py-5">
+        <p class="mb-2 text-[11px] uppercase tracking-[0.1em] text-gray-400">Successful</p>
+        <p class="text-[28px] font-medium text-green-700" style="font-family:'Cormorant Garamond',serif;" id="success-count">0</p>
+      </div>
+      <div class="rounded-2xl border border-black/[0.06] bg-white px-6 py-5">
+        <p class="mb-2 text-[11px] uppercase tracking-[0.1em] text-gray-400">Refunds</p>
+        <p class="text-[28px] font-medium text-blue-700" style="font-family:'Cormorant Garamond',serif;" id="refund-count">0</p>
+      </div>
+      <div class="rounded-2xl border border-black/[0.06] bg-white px-6 py-5">
+        <p class="mb-2 text-[11px] uppercase tracking-[0.1em] text-gray-400">Pending</p>
+        <p class="text-[28px] font-medium text-amber-800" style="font-family:'Cormorant Garamond',serif;" id="pending-count">0</p>
       </div>
     </div>
 
-    <main style="max-width: 1100px; margin: 0 auto; padding: 0 24px 80px">
-      <!-- Summary cards -->
-      <div
-        style="
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-          gap: 14px;
-          margin-top: -28px;
-          margin-bottom: 40px;
-        "
-      >
-        <div
-          style="
-            background: white;
-            border: 1px solid rgba(0, 0, 0, 0.06);
-            border-radius: 16px;
-            padding: 20px 24px;
-          "
-        >
-          <p
-            style="
-              font-size: 11px;
-              color: #9ca3af;
-              text-transform: uppercase;
-              letter-spacing: 0.1em;
-              margin-bottom: 8px;
-            "
-          >
-            Total spent
-          </p>
-          <p
-            style="
-              font-family: &quot;Cormorant Garamond&quot;, serif;
-              font-size: 28px;
-              font-weight: 500;
-              color: #111827;
-            "
-            id="spent"
-          >
-            ₦0
-          </p>
-        </div>
-        <div
-          style="
-            background: white;
-            border: 1px solid rgba(0, 0, 0, 0.06);
-            border-radius: 16px;
-            padding: 20px 24px;
-          "
-        >
-          <p
-            style="
-              font-size: 11px;
-              color: #9ca3af;
-              text-transform: uppercase;
-              letter-spacing: 0.1em;
-              margin-bottom: 8px;
-            "
-          >
-            Successful
-          </p>
-          <p
-            style="
-              font-family: &quot;Cormorant Garamond&quot;, serif;
-              font-size: 28px;
-              font-weight: 500;
-              color: #166534;
-            "
-            id="success-count"
-          >
-            0
-          </p>
-        </div>
-        <div
-          style="
-            background: white;
-            border: 1px solid rgba(0, 0, 0, 0.06);
-            border-radius: 16px;
-            padding: 20px 24px;
-          "
-        >
-          <p
-            style="
-              font-size: 11px;
-              color: #9ca3af;
-              text-transform: uppercase;
-              letter-spacing: 0.1em;
-              margin-bottom: 8px;
-            "
-          >
-            Refunds
-          </p>
-          <p
-            style="
-              font-family: &quot;Cormorant Garamond&quot;, serif;
-              font-size: 28px;
-              font-weight: 500;
-              color: #1e40af;
-            "
-            id="refund-count"
-          >
-            0
-          </p>
-        </div>
-        <div
-          style="
-            background: white;
-            border: 1px solid rgba(0, 0, 0, 0.06);
-            border-radius: 16px;
-            padding: 20px 24px;
-          "
-        >
-          <p
-            style="
-              font-size: 11px;
-              color: #9ca3af;
-              text-transform: uppercase;
-              letter-spacing: 0.1em;
-              margin-bottom: 8px;
-            "
-          >
-            Pending
-          </p>
-          <p
-            style="
-              font-family: &quot;Cormorant Garamond&quot;, serif;
-              font-size: 28px;
-              font-weight: 500;
-              color: #854d0e;
-            "
-            id="pending-count"
-          >
-            0
-          </p>
-        </div>
+    <!-- Filters + search -->
+    <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex flex-wrap gap-2" id="filter-wrap">
+        <button class="filter-btn active rounded-full border border-gray-200 bg-white px-4 py-1.5 text-[13px] text-gray-600 transition" data-filter="all">All</button>
+        <button class="filter-btn rounded-full border border-gray-200 bg-white px-4 py-1.5 text-[13px] text-gray-600 transition" data-filter="payment">Payments</button>
+        <button class="filter-btn rounded-full border border-gray-200 bg-white px-4 py-1.5 text-[13px] text-gray-600 transition" data-filter="refund">Refunds</button>
+        <button class="filter-btn rounded-full border border-gray-200 bg-white px-4 py-1.5 text-[13px] text-gray-600 transition" data-filter="pending">Pending</button>
+        <button class="filter-btn rounded-full border border-gray-200 bg-white px-4 py-1.5 text-[13px] text-gray-600 transition" data-filter="failed">Failed</button>
       </div>
+      <input type="search" id="tx-search" placeholder="Search transactions..."
+        class="min-w-[200px] rounded-xl border border-gray-200 bg-white px-3.5 py-2 text-[13px] text-gray-900 outline-none transition focus:border-[#55142A] focus:ring-[3px] focus:ring-[#55142A]/8" />
+    </div>
 
-      <!-- Filters + search -->
-      <div
-        style="
-          display: flex;
-          flex-wrap: wrap;
-          gap: 12px;
-          align-items: center;
-          justify-content: space-between;
-          margin-bottom: 24px;
-        "
-      >
-        <div style="display: flex; gap: 8px; flex-wrap: wrap" id="filter-wrap">
-          <button class="filter-btn active" data-filter="all">All</button>
-          <button class="filter-btn" data-filter="payment">Payments</button>
-          <button class="filter-btn" data-filter="refund">Refunds</button>
-          <button class="filter-btn" data-filter="pending">Pending</button>
-          <button class="filter-btn" data-filter="failed">Failed</button>
-        </div>
-        <input
-          type="search"
-          id="tx-search"
-          placeholder="Search transactions..."
-          style="
-            border: 1px solid #e5e7eb;
-            border-radius: 10px;
-            padding: 8px 14px;
-            font-size: 13px;
-            font-family: &quot;DM Sans&quot;, sans-serif;
-            outline: none;
-            min-width: 200px;
-            color: #111827;
-          "
-          onfocus="this.style.borderColor='#55142A'"
-          onblur="this.style.borderColor='#e5e7eb'"
-        />
+    <!-- List -->
+    <div id="history-list" class="flex flex-col gap-2.5"></div>
+
+    <!-- Empty -->
+    <div id="empty-state" class="hidden py-20 text-center">
+      <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#55142A]/[0.07]">
+        <svg class="h-6 w-6 text-[#55142A]/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5z"/>
+        </svg>
       </div>
+      <p class="text-xl text-gray-700" style="font-family:'Cormorant Garamond',serif;">No transactions yet</p>
+      <p class="mt-1 text-[13px] text-gray-400">Your payment history will appear here after your first booking.</p>
+      <a href="/lodges" class="mt-5 inline-block rounded-xl bg-[#55142A] px-6 py-2.5 text-[13px] text-white transition hover:bg-[#6e1a35]">Explore lodges</a>
+    </div>
 
-      <!-- List -->
-      <div
-        id="history-list"
-        style="display: flex; flex-direction: column; gap: 10px"
-      ></div>
+  </main>
 
-      <!-- Empty -->
-      <div
-        id="empty-state"
-        style="display: none; text-align: center; padding: 80px 24px"
-      >
-        <div
-          style="
-            width: 56px;
-            height: 56px;
-            background: rgba(85, 20, 42, 0.07);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 16px;
-          "
-        >
-          <svg
-            style="width: 24px; height: 24px; color: #55142a; opacity: 0.4"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            stroke-width="1.5"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5z"
-            />
-          </svg>
-        </div>
-        <p
-          style="
-            font-family: &quot;Cormorant Garamond&quot;, serif;
-            font-size: 20px;
-            color: #374151;
-            margin-bottom: 6px;
-          "
-        >
-          No transactions yet
-        </p>
-        <p style="font-size: 13px; color: #9ca3af">
-          Your payment history will appear here after your first booking.
-        </p>
-        <a
-          href="/lodges"
-          style="
-            display: inline-block;
-            margin-top: 20px;
-            background: #55142a;
-            color: white;
-            padding: 10px 24px;
-            border-radius: 10px;
-            font-size: 13px;
-            text-decoration: none;
-          "
-          >Explore lodges</a
-        >
-      </div>
-    </main>
+  <%- include('partials/footer.ejs') %>
 
-    <%- include('partials/footer.ejs') %>
-
-    <script>
-      const HISTORY_DATA = <%- JSON.stringify(typeof transactions !== 'undefined' ? transactions : [
-        { id:'TXN-001', type:'payment', lodge:'Emerald Heights Lodge', location:'Port Harcourt', amount:112000, date:'2026-04-20', ref:'PAY-8821A', status:'success' },
-        { id:'TXN-002', type:'payment', lodge:'Riverside Guest House', location:'Asaba', amount:55500, date:'2026-03-10', ref:'PAY-7712B', status:'success' },
-        { id:'TXN-003', type:'refund',  lodge:'Skyline Apartment',     location:'Lekki',     amount:45000, date:'2026-03-01', ref:'REF-3310C', status:'refund' },
-        { id:'TXN-004', type:'pending', lodge:'Palm Court Suites',     location:'Abuja',     amount:70000, date:'2026-02-20', ref:'PAY-5509D', status:'pending' },
-        { id:'TXN-005', type:'failed',  lodge:'Cedar View Hostel',     location:'Owerri',    amount:30000, date:'2026-02-10', ref:'PAY-2201E', status:'failed' },
-      ]) %>;
-    </script>
-    <script src="/js/navbar.js"></script>
-    <script src="/js/history.js"></script>
-  </body>
+  <script>
+    const HISTORY_DATA = <%- JSON.stringify(typeof transactions !== 'undefined' ? transactions : [
+      { id:'TXN-001', type:'payment', lodge:'Emerald Heights Lodge', location:'Port Harcourt', amount:112000, date:'2026-04-20', ref:'PAY-8821A', status:'success' },
+      { id:'TXN-002', type:'payment', lodge:'Riverside Guest House', location:'Asaba',         amount:55500,  date:'2026-03-10', ref:'PAY-7712B', status:'success' },
+      { id:'TXN-003', type:'refund',  lodge:'Skyline Apartment',     location:'Lekki',         amount:45000,  date:'2026-03-01', ref:'REF-3310C', status:'refund' },
+      { id:'TXN-004', type:'pending', lodge:'Palm Court Suites',     location:'Abuja',         amount:70000,  date:'2026-02-20', ref:'PAY-5509D', status:'pending' },
+      { id:'TXN-005', type:'failed',  lodge:'Cedar View Hostel',     location:'Owerri',        amount:30000,  date:'2026-02-10', ref:'PAY-2201E', status:'failed' },
+    ]) %>;
+  </script>
+  <script src="/js/navbar.js"></script>
+  <script src="/js/history.js"></script>
+</body>
 </html>

@@ -13,119 +13,84 @@
   <link rel="stylesheet" href="/src/carousel.css" />
   <style>
     body { font-family: 'DM Sans', sans-serif; background: #f8f6f3; }
-
-    @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-    .hero-text { animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) forwards; }
-    .hero-text-2 { animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.1s forwards; opacity:0; }
-    .hero-text-3 { animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.2s forwards; opacity:0; }
-
-    .search-bar {
-      display: flex; width: 100%; max-width: 580px;
-      border: 1px solid rgba(0,0,0,0.08); border-radius: 16px;
-      background: white; box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-      overflow: hidden;
-    }
-    .search-bar input {
-      flex: 1; padding: 14px 18px; font-size: 14px; border: none;
-      outline: none; font-family: 'DM Sans', sans-serif; color: #111827;
-      background: transparent;
-    }
-    .search-bar input::placeholder { color: #9ca3af; }
-    .search-bar button {
-      padding: 0 24px; background: #55142A; color: white; border: none;
-      font-size: 13px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif;
-      transition: background 0.2s; white-space: nowrap;
-    }
-    .search-bar button:hover { background: #6e1a35; }
-
-    .trust-pill {
-      display: inline-flex; align-items: center; gap: 6px;
-      background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.18);
-      border-radius: 999px; padding: 5px 14px; font-size: 12px; color: rgba(255,255,255,0.8);
-    }
-
-    .section-label { font-size: 11px; font-weight: 500; color: #A79A79; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 8px; }
-    .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(22px,3vw,30px); font-weight: 500; color: #111827; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    .hero-1 { animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) forwards; }
+    .hero-2 { animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.1s forwards; opacity:0; }
+    .hero-3 { animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.2s forwards; opacity:0; }
+    .search-bar { display:flex; width:100%; max-width:560px; border:1px solid rgba(0,0,0,0.08); border-radius:16px; background:white; box-shadow:0 4px 24px rgba(0,0,0,0.08); overflow:hidden; }
+    .search-bar input { flex:1; padding:14px 18px; font-size:14px; border:none; outline:none; font-family:'DM Sans',sans-serif; color:#111827; background:transparent; }
+    .search-bar input::placeholder { color:#9ca3af; }
+    .search-bar button { padding:0 24px; background:#55142A; color:white; border:none; font-size:13px; font-weight:500; cursor:pointer; font-family:'DM Sans',sans-serif; transition:background 0.2s; white-space:nowrap; }
+    .search-bar button:hover { background:#6e1a35; }
+    .trust-pill { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.18); border-radius:999px; padding:5px 14px; font-size:12px; color:rgba(255,255,255,0.8); }
   </style>
 </head>
-
 <body class="min-h-screen pt-16">
 
   <%- include('partials/header.ejs') %>
 
   <main>
 
-    <!-- HERO -->
-    <section style="background:#55142A; padding:72px 24px 88px; text-align:center; position:relative; overflow:hidden;">
-      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 25% 60%, rgba(255,255,255,0.04) 0%, transparent 55%);pointer-events:none;"></div>
-      <div style="max-width:680px; margin:0 auto; position:relative;">
-
-        <!-- Trust pills -->
-        <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:24px;" class="hero-text">
+    <!-- Hero -->
+    <section class="relative overflow-hidden bg-[#55142A] px-6 pb-22 pt-18 text-center">
+      <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_25%_60%,rgba(255,255,255,0.04)_0%,transparent_55%)]"></div>
+      <div class="relative mx-auto max-w-2xl">
+        <div class="hero-1 mb-6 flex flex-wrap justify-center gap-2.5">
           <span class="trust-pill">
-            <svg style="width:12px;height:12px;fill:#A79A79;" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="h-3 w-3 fill-[#A79A79]" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
             1,200+ verified lodges
           </span>
           <span class="trust-pill">8,500+ students helped</span>
           <span class="trust-pill">FUTO-focused</span>
         </div>
-
-        <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(32px,6vw,58px);font-weight:500;color:white;line-height:1.15;margin-bottom:16px;" class="hero-text-2">
+        <h1 class="hero-2 mb-4 text-5xl font-medium leading-[1.15] text-white md:text-6xl" style="font-family:'Cormorant Garamond',serif;">
           Find the perfect lodge<br>
-          <span style="color:#A79A79;">around FUTO</span>
+          <span class="text-[#A79A79]">around FUTO</span>
         </h1>
-
-        <p style="font-size:15px;color:rgba(255,255,255,0.6);line-height:1.75;max-width:480px;margin:0 auto 32px;" class="hero-text-3">
+        <p class="hero-3 mx-auto mb-8 max-w-md text-[15px] leading-[1.75] text-white/60">
           Discover, compare and save the best student lodges near campus — verified listings, honest pricing, fast booking.
         </p>
-
-        <!-- Search -->
-        <div style="display:flex;justify-content:center;" class="hero-text-3">
-          <form action="/search" method="get" class="search-bar" style="max-width:560px;width:100%;">
+        <div class="hero-3 flex justify-center">
+          <form action="/search" method="get" class="search-bar w-full">
             <input type="text" name="q" placeholder="Search by location, name or price..." />
             <button type="submit">Search</button>
           </form>
         </div>
-
       </div>
     </section>
 
-    <!-- CAROUSEL -->
-    <section style="padding:48px 20px 0; max-width:1200px; margin:0 auto;">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+    <!-- Carousel -->
+    <section class="mx-auto max-w-7xl px-5 pt-12">
+      <div class="mb-4 flex items-center justify-between">
         <div>
-          <p class="section-label">Trending now</p>
-          <h2 class="section-title">Popular lodges</h2>
+          <p class="mb-1 text-[11px] font-medium uppercase tracking-[0.15em] text-[#A79A79]">Trending now</p>
+          <h2 class="text-2xl font-medium text-gray-900 md:text-3xl" style="font-family:'Cormorant Garamond',serif;">Popular lodges</h2>
         </div>
-        <a href="/lodges" style="font-size:13px;color:#55142A;text-decoration:none;border:1px solid rgba(85,20,42,0.2);padding:6px 16px;border-radius:999px;transition:background 0.15s;" onmouseover="this.style.background='rgba(85,20,42,0.05)'" onmouseout="this.style.background='transparent'">View all →</a>
+        <a href="/lodges" class="rounded-full border border-[#55142A]/20 px-4 py-1.5 text-[13px] text-[#55142A] transition hover:bg-[#55142A]/5">View all →</a>
       </div>
-      <div style="border-radius:20px;overflow:hidden;">
+      <div class="overflow-hidden rounded-[20px]">
         <%- include('partials/carousel.ejs') %>
       </div>
     </section>
 
-    <!-- COMMUNITIES -->
-    <section id="communities" style="padding:64px 20px 0; max-width:1200px; margin:0 auto;">
-      <div style="margin-bottom:40px;">
-        <p class="section-label">By location</p>
-        <h2 class="section-title">Explore by community</h2>
+    <!-- Communities -->
+    <section id="communities" class="mx-auto max-w-7xl px-5 pt-16">
+      <div class="mb-10">
+        <p class="mb-1 text-[11px] font-medium uppercase tracking-[0.15em] text-[#A79A79]">By location</p>
+        <h2 class="text-2xl font-medium text-gray-900 md:text-3xl" style="font-family:'Cormorant Garamond',serif;">Explore by community</h2>
       </div>
       <%- include('partials/futo-communities.ejs') %>
     </section>
 
     <!-- CTA -->
-    <section style="padding:64px 20px 80px; max-width:1200px; margin:0 auto;">
-      <div style="background:#55142A;border-radius:24px;padding:56px 40px;text-align:center;">
-        <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(24px,4vw,36px);font-weight:500;color:white;margin-bottom:12px;">
-          Ready to find your next lodge?
-        </h2>
-        <p style="font-size:14px;color:rgba(255,255,255,0.6);margin-bottom:28px;max-width:400px;margin-left:auto;margin-right:auto;">
-          Start exploring verified lodges and save your favourite places.
-        </p>
-        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-          <a href="/lodges" style="display:inline-block;background:white;color:#55142A;padding:12px 28px;border-radius:12px;font-size:14px;font-weight:500;text-decoration:none;transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">Browse lodges</a>
+    <section class="mx-auto max-w-7xl px-5 pb-20 pt-16">
+      <div class="rounded-3xl bg-[#55142A] px-10 py-14 text-center">
+        <h2 class="mb-3 text-3xl font-medium text-white md:text-4xl" style="font-family:'Cormorant Garamond',serif;">Ready to find your next lodge?</h2>
+        <p class="mx-auto mb-7 max-w-md text-sm text-white/60">Start exploring verified lodges and save your favourite places.</p>
+        <div class="flex flex-wrap justify-center gap-3">
+          <a href="/lodges" class="inline-block rounded-xl bg-white px-7 py-3 text-sm font-medium text-[#55142A] transition hover:scale-[1.03]">Browse lodges</a>
           <% if (typeof user === 'undefined' || !user) { %>
-          <a href="/sign-up" style="display:inline-block;background:rgba(255,255,255,0.12);color:white;padding:12px 28px;border-radius:12px;font-size:14px;font-weight:500;text-decoration:none;border:1px solid rgba(255,255,255,0.2);transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">Create account</a>
+          <a href="/sign-up" class="inline-block rounded-xl border border-white/20 bg-white/12 px-7 py-3 text-sm font-medium text-white transition hover:scale-[1.03]">Create account</a>
           <% } %>
         </div>
       </div>
