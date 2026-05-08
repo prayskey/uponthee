@@ -1,110 +1,101 @@
 <style>
-  .lodge-card {
-    position: relative; overflow: hidden; border-radius: 18px;
-    background: white; border: 1px solid rgba(0,0,0,0.06);
-    transition: transform 0.25s cubic-bezier(0.22,1,0.36,1), box-shadow 0.25s ease;
-    display: block; text-decoration: none; color: inherit;
-  }
-  .lodge-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(85,20,42,0.1); }
-  .lodge-card .card-img { width: 100%; height: 200px; object-fit: cover; display: block; transition: transform 0.5s ease; }
   .lodge-card:hover .card-img { transform: scale(1.05); }
-  .lodge-card .img-wrap { overflow: hidden; }
-  .save-btn {
-    position: absolute; top: 10px; right: 10px; z-index: 10;
-    width: 34px; height: 34px; border-radius: 50%;
-    background: rgba(255,255,255,0.92); border: none; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.12); backdrop-filter: blur(4px);
-    transition: transform 0.2s, background 0.2s;
-  }
-  .save-btn:hover { transform: scale(1.1); background: white; }
   .save-btn.saved svg { fill: #55142A; stroke: #55142A; }
-  .community-label {
-    font-size:11px; font-weight:500; color:rgba(255,255,255,0.3);
-    text-transform:uppercase; letter-spacing:0.12em; margin-bottom:10px;
-  }
-  .community-title {
-    font-family:'Cormorant Garamond',serif; font-size:clamp(20px,3vw,26px);
-    font-weight:500; color:#111827; margin-bottom:20px;
-  }
-  .view-all {
-    font-size:12px; font-weight:500; color:#55142A; text-decoration:none;
-    border: 1px solid rgba(85,20,42,0.2); padding:5px 14px; border-radius:999px;
-    transition: background 0.15s, color 0.15s;
-    white-space: nowrap;
-  }
-  .view-all:hover { background:#55142A; color:white; }
-  .rating-badge {
-    position: absolute; bottom: 10px; left: 10px; z-index: 10;
-    background: rgba(0,0,0,0.55); color: white; backdrop-filter: blur(4px);
-    padding: 3px 9px; border-radius: 8px; font-size: 11px; font-weight: 500;
-    display: flex; align-items: center; gap: 4px;
-  }
+  .community-title { font-family: 'Cormorant Garamond', serif; }
 </style>
 
-<div style="display:flex;flex-direction:column;gap:56px;">
+<div class="flex flex-col gap-16 px-4 sm:px-6 lg:px-8 py-10">
 
   <% const communities = [
     {
       name: 'Umuchima', label: 'Community',
       lodges: [
-        { id:1,  name:'Sunrise Lodge',   price:120000, rating:'4.8', img:'/images/lodge1.jpg' },
-        { id:2,  name:'Prime Lodge',     price:150000, rating:'4.6', img:'/images/lodge2.jpg' },
-        { id:3,  name:'Elite Stay',      price:180000, rating:'4.9', img:'/images/lodge3.jpg' },
-        { id:4,  name:'Budget Lodge',    price:90000,  rating:'4.3', img:'/images/lodge4.jpg' },
+        { id:1,  name:'Sunrise Lodge',  price:120000, rating:'4.8', img:'/images/lodge1.jpg' },
+        { id:2,  name:'Prime Lodge',    price:150000, rating:'4.6', img:'/images/lodge2.jpg' },
+        { id:3,  name:'Elite Stay',     price:180000, rating:'4.9', img:'/images/lodge3.jpg' },
+        { id:4,  name:'Budget Lodge',   price:90000,  rating:'4.3', img:'/images/lodge4.jpg' },
       ]
     },
     {
       name: 'Eziobodo', label: 'Community',
       lodges: [
-        { id:5,  name:'Royal Lodge',     price:130000, rating:'4.7', img:'/images/lodge5.jpg' },
-        { id:6,  name:'Green View',      price:110000, rating:'4.4', img:'/images/lodge6.jpg' },
-        { id:7,  name:'Cedar Hostel',    price:95000,  rating:'4.2', img:'/images/lodge7.jpg' },
-        { id:8,  name:'The Retreat',     price:160000, rating:'4.8', img:'/images/lodge8.jpg' },
+        { id:5,  name:'Royal Lodge',    price:130000, rating:'4.7', img:'/images/lodge5.jpg' },
+        { id:6,  name:'Green View',     price:110000, rating:'4.4', img:'/images/lodge6.jpg' },
+        { id:7,  name:'Cedar Hostel',   price:95000,  rating:'4.2', img:'/images/lodge7.jpg' },
+        { id:8,  name:'The Retreat',    price:160000, rating:'4.8', img:'/images/lodge8.jpg' },
       ]
     },
     {
       name: 'Ihiagwa', label: 'Community',
       lodges: [
-        { id:9,  name:'Palm Court',      price:105000, rating:'4.5', img:'/images/lodge9.jpg' },
-        { id:10, name:'Haven Lodge',     price:140000, rating:'4.7', img:'/images/lodge10.jpg' },
-        { id:11, name:'Campus View',     price:85000,  rating:'4.1', img:'/images/lodge11.jpg' },
-        { id:12, name:'Silver Hostel',   price:125000, rating:'4.6', img:'/images/lodge12.jpg' },
+        { id:9,  name:'Palm Court',     price:105000, rating:'4.5', img:'/images/lodge9.jpg' },
+        { id:10, name:'Haven Lodge',    price:140000, rating:'4.7', img:'/images/lodge10.jpg' },
+        { id:11, name:'Campus View',    price:85000,  rating:'4.1', img:'/images/lodge11.jpg' },
+        { id:12, name:'Silver Hostel',  price:125000, rating:'4.6', img:'/images/lodge12.jpg' },
       ]
     },
   ] %>
 
   <% communities.forEach(function(community) { %>
   <section>
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;gap:16px;">
+
+    <div class="flex items-center justify-between gap-4 mb-6">
       <div>
-        <p class="community-label"><%= community.label %></p>
-        <h2 class="community-title"><%= community.name %> Lodges</h2>
+        <p class="text-[11px] font-medium text-gray-400 uppercase tracking-widest mb-1"><%= community.label %></p>
+        <h2 class="community-title text-2xl font-medium text-gray-900"><%= community.name %> Lodges</h2>
       </div>
-      <a href="/lodges?community=<%= community.name.toLowerCase() %>" class="view-all">View all →</a>
+      <a href="/lodges?community=<%= community.name.toLowerCase() %>"
+         class="shrink-0 text-xs font-medium text-[#55142A] border border-[#55142A]/25 px-4 py-1.5 rounded-full transition-colors duration-150 hover:bg-[#55142A] hover:text-white">
+        View all →
+      </a>
     </div>
 
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px;">
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
       <% community.lodges.forEach(function(lodge) { %>
-      <a href="/select-lodge/<%= lodge.id %>" class="lodge-card">
-        <button class="save-btn" data-id="<%= lodge.id %>" onclick="event.preventDefault();toggleSave(this)" aria-label="Save lodge">
-          <svg style="width:16px;height:16px;" fill="none" stroke="#55142A" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
+
+      <a href="/select-lodge/<%= lodge.id %>"
+         class="lodge-card group relative flex flex-col bg-white rounded-2xl border border-black/[0.06] overflow-hidden no-underline text-inherit transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_12px_36px_rgba(85,20,42,0.1)]">
+
+        
+        <button class="save-btn absolute top-2.5 right-2.5 z-10 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm border-none cursor-pointer transition-transform duration-200 hover:scale-110 hover:bg-white"
+                data-id="<%= lodge.id %>"
+                onclick="event.preventDefault(); toggleSave(this)"
+                aria-label="Save lodge">
+          <svg class="w-4 h-4" fill="none" stroke="#55142A" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
           </svg>
         </button>
-        <div class="img-wrap">
-          <img src="<%= lodge.img %>" alt="<%= lodge.name %>" class="card-img" loading="lazy" />
+
+       
+        <div class="overflow-hidden w-full h-48 shrink-0">
+          <img src="<%= lodge.img %>" alt="<%= lodge.name %>"
+               class="card-img w-full h-full object-cover transition-transform duration-500"
+               loading="lazy" />
         </div>
-        <div class="rating-badge">
-          <svg style="width:10px;height:10px;fill:#f59e0b;stroke:none;" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <%= lodge.rating %>
-        </div>
-        <div style="padding:14px 16px 16px;">
-          <h3 style="font-size:14px;font-weight:500;color:#111827;margin-bottom:4px;"><%= lodge.name %></h3>
-          <p style="font-size:12px;color:#9ca3af;margin-bottom:6px;"><%= community.name %></p>
-          <p style="font-size:14px;font-weight:600;color:#55142A;" class="text-right">₦<%= lodge.price.toLocaleString() %> <span style="font-size:11px;font-weight:400;color:#9ca3af;">/ year</span></p>
+
+        
+        <div class="flex flex-col gap-1 p-4">
+          <h3 class="text-sm font-medium text-gray-900 leading-snug"><%= lodge.name %></h3>
+          <p class="text-xs text-gray-400"><%= community.name %></p>
+
+          
+          <div class="flex items-center gap-1 mt-1">
+            <svg class="w-3 h-3 fill-amber-400 shrink-0" viewBox="0 0 24 24">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+            <span class="text-xs font-medium text-gray-700"><%= lodge.rating %></span>
+          </div>
+
+          
+          <p class="text-sm font-semibold text-[#55142A] mt-2 text-right">
+            ₦<%= lodge.price.toLocaleString() %>
+            <span class="text-[11px] font-normal text-gray-400">/ year</span>
+          </p>
         </div>
       </a>
+
       <% }); %>
     </div>
   </section>
@@ -115,7 +106,6 @@
 <script>
   const savedIds = new Set(JSON.parse(localStorage.getItem('uponthee_saved') || '[]'));
 
-  // Mark already-saved lodges on load
   document.querySelectorAll('.save-btn').forEach(btn => {
     if (savedIds.has(Number(btn.dataset.id))) btn.classList.add('saved');
   });
@@ -131,7 +121,6 @@
     }
     localStorage.setItem('uponthee_saved', JSON.stringify([...savedIds]));
 
-    // Sync with backend silently
     fetch('/saved/toggle', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
