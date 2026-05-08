@@ -15,11 +15,11 @@ const PORT = process.env.PORT;
 const saltRounds = 10;
 
 const db = new pg.Pool({
-    // connectionString: process.env.SUPABASE_CONNECTION_STRING,
-    connectionString: process.env.DATABASE_URL,
-    // ssl: {
-    //     rejectUnauthorized: false,
-    // }
+    connectionString: process.env.SUPABASE_CONNECTION_STRING,
+    // connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false,
+    }
 });
 const pgSession = connectPg(session);
 
@@ -264,7 +264,7 @@ passport.deserializeUser(async (user, done) => {
         done(err);
     }
 });
-app.listen(PORT, () => {
-    console.log(`Server is running at PORT: ${PORT}`);
-});
-// export default app;
+// app.listen(PORT, () => {
+//     console.log(`Server is running at PORT: ${PORT}`);
+// });
+export default app;
